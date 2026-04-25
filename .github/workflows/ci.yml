@@ -54,7 +54,7 @@ jobs:
           restore-keys: composer-${{ runner.os }}-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
+        run: composer install --prefer-dist --no-progress --no-interaction --no-scripts
 
       - name: Lint Twig
         run: php bin/console lint:twig templates/ --env=test
