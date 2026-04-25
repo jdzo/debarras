@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Infrastructure;
 
 use App\Infrastructure\Upload\PhotoUploader;
+use FilesystemIterator;
 use PHPUnit\Framework\TestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploaderTest extends TestCase
@@ -15,7 +18,7 @@ class PhotoUploaderTest extends TestCase
     protected function setUp(): void
     {
         $this->tmpDir = sys_get_temp_dir() . '/photo_uploader_test_' . bin2hex(random_bytes(4));
-        mkdir($this->tmpDir, 0755, true);
+        mkdir($this->tmpDir, 0o755, true);
     }
 
     protected function tearDown(): void
@@ -55,7 +58,7 @@ class PhotoUploaderTest extends TestCase
 
         $tmpFile = tempnam(sys_get_temp_dir(), 'test_');
         // Simulate oversized file via a mock
-        $file = $this->createMock(UploadedFile::class);
+        $file = $this->createStub(UploadedFile::class);
         $file->method('isValid')->willReturn(true);
         $file->method('getSize')->willReturn(10 * 1024 * 1024); // 10 Mo
         $file->method('getMimeType')->willReturn('image/jpeg');
@@ -69,7 +72,7 @@ class PhotoUploaderTest extends TestCase
     {
         $uploader = new PhotoUploader($this->tmpDir);
 
-        $file = $this->createMock(UploadedFile::class);
+        $file = $this->createStub(UploadedFile::class);
         $file->method('isValid')->willReturn(true);
         $file->method('getSize')->willReturn(1024);
         $file->method('getMimeType')->willReturn('application/pdf');
@@ -94,9 +97,9 @@ class PhotoUploaderTest extends TestCase
         if (!is_dir($dir)) {
             return;
         }
-        $items = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
+        $items = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($items as $item) {
             $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());

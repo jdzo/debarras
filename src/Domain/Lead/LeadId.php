@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Lead;
 
+use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
 final readonly class LeadId
@@ -11,7 +12,7 @@ final readonly class LeadId
     private function __construct(private string $value)
     {
         if (!Uuid::isValid($value)) {
-            throw new \InvalidArgumentException("LeadId invalide : $value");
+            throw new InvalidArgumentException("LeadId invalide : $value");
         }
     }
 

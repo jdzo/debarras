@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Estimation\ValueObject;
 
+use InvalidArgumentException;
+
 final readonly class Coordonnees
 {
     public function __construct(
@@ -15,15 +17,15 @@ final readonly class Coordonnees
         public ?string $ville = null,
     ) {
         if (empty(trim($nom))) {
-            throw new \InvalidArgumentException("Le nom est obligatoire");
+            throw new InvalidArgumentException('Le nom est obligatoire');
         }
 
         if (empty(trim($telephone))) {
-            throw new \InvalidArgumentException("Le téléphone est obligatoire");
+            throw new InvalidArgumentException('Le téléphone est obligatoire');
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException("L'email n'est pas valide");
+        if (!filter_var($email, \FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException("L'email n'est pas valide");
         }
     }
 
@@ -43,11 +45,6 @@ final readonly class Coordonnees
             codePostal: $codePostal ? trim($codePostal) : null,
             ville: $ville ? trim($ville) : null,
         );
-    }
-
-    private static function normaliserTelephone(string $telephone): string
-    {
-        return preg_replace('/[^0-9+]/', '', trim($telephone));
     }
 
     public function adresseComplete(): ?string
@@ -86,5 +83,10 @@ final readonly class Coordonnees
             codePostal: $data['code_postal'] ?? null,
             ville: $data['ville'] ?? null,
         );
+    }
+
+    private static function normaliserTelephone(string $telephone): string
+    {
+        return preg_replace('/[^0-9+]/', '', trim($telephone));
     }
 }

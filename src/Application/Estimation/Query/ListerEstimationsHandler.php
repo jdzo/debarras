@@ -30,13 +30,14 @@ final class ListerEstimationsHandler
             ->select('COUNT(e.id)')
             ->from(EstimationEntity::class, 'e');
 
-        if ($query->statut !== null && $query->statut !== '') {
+        if (null !== $query->statut && '' !== $query->statut) {
             $qb->andWhere('e.statut = :statut')->setParameter('statut', $query->statut);
             $countQb->andWhere('e.statut = :statut')->setParameter('statut', $query->statut);
         }
 
-        if ($query->recherche !== null && $query->recherche !== '') {
-            $rechercheLike = '%' . $query->recherche . '%';
+        if (null !== $query->recherche && '' !== $query->recherche) {
+            $escaped = str_replace(['%', '_'], ['\\%', '\\_'], $query->recherche);
+            $rechercheLike = '%' . $escaped . '%';
             $searchWhere = 'e.coordNom LIKE :recherche OR e.coordEmail LIKE :recherche OR e.coordTelephone LIKE :recherche';
             $qb->andWhere($searchWhere)->setParameter('recherche', $rechercheLike);
             $countQb->andWhere($searchWhere)->setParameter('recherche', $rechercheLike);

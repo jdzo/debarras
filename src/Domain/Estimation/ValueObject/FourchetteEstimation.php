@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Estimation\ValueObject;
 
+use InvalidArgumentException;
+
 final readonly class FourchetteEstimation
 {
     public function __construct(
@@ -11,11 +13,11 @@ final readonly class FourchetteEstimation
         public int $prixMax,
     ) {
         if ($prixMin < 0) {
-            throw new \InvalidArgumentException("Le prix minimum ne peut pas être négatif");
+            throw new InvalidArgumentException('Le prix minimum ne peut pas être négatif');
         }
 
         if ($prixMax < $prixMin) {
-            throw new \InvalidArgumentException("Le prix maximum doit être supérieur ou égal au prix minimum");
+            throw new InvalidArgumentException('Le prix maximum doit être supérieur ou égal au prix minimum');
         }
     }
 

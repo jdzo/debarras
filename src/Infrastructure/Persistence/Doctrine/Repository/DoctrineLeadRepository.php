@@ -14,6 +14,7 @@ use App\Domain\Lead\ValueObject\SourceTracking;
 use App\Domain\Lead\ValueObject\StatutLead;
 use App\Domain\Lead\ValueObject\TypeCapture;
 use App\Infrastructure\Persistence\Doctrine\Entity\LeadEntity;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class DoctrineLeadRepository implements LeadRepository
@@ -62,7 +63,7 @@ final class DoctrineLeadRepository implements LeadRepository
         return LeadId::generate();
     }
 
-    public function findLeadsARelancer(\DateTimeImmutable $avant): array
+    public function findLeadsARelancer(DateTimeImmutable $avant): array
     {
         $entities = $this->em->createQueryBuilder()
             ->select('l')
@@ -85,8 +86,13 @@ final class DoctrineLeadRepository implements LeadRepository
             contact: new ContactLead($e->nom, $e->telephone, $e->email),
             typeCapture: TypeCapture::from($e->typeCapture),
             source: new SourceTracking(
-                $e->utmSource, $e->utmMedium, $e->utmCampaign,
-                $e->utmTerm, $e->utmContent, $e->referrer, $e->landingPage,
+                $e->utmSource,
+                $e->utmMedium,
+                $e->utmCampaign,
+                $e->utmTerm,
+                $e->utmContent,
+                $e->referrer,
+                $e->landingPage,
             ),
             score: ScoreLead::from($e->score),
             statut: StatutLead::from($e->statut),

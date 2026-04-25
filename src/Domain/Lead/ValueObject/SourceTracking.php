@@ -50,6 +50,6 @@ final readonly class SourceTracking
 
     public function hasUtm(): bool
     {
-        return $this->utmSource !== null || $this->utmMedium !== null || $this->utmCampaign !== null;
+        return null !== $this->utmSource || null !== $this->utmMedium || null !== $this->utmCampaign;
     }
 }

@@ -7,7 +7,6 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 use App\Domain\Estimation\Estimation;
 use App\Domain\Estimation\EstimationId;
 use App\Domain\Estimation\EstimationRepository;
-use App\Domain\Estimation\Service\CalculateurPrix;
 use App\Domain\Estimation\ValueObject\Accessibilite;
 use App\Domain\Estimation\ValueObject\Coordonnees;
 use App\Domain\Estimation\ValueObject\FourchetteEstimation;
@@ -31,7 +30,7 @@ final class DoctrineEstimationRepository implements EstimationRepository
     {
         $entity = $this->em->find(EstimationEntity::class, $estimation->id()->value());
 
-        if ($entity === null) {
+        if (null === $entity) {
             $entity = new EstimationEntity();
         }
 
@@ -45,7 +44,7 @@ final class DoctrineEstimationRepository implements EstimationRepository
     {
         $entity = $this->em->find(EstimationEntity::class, $id->value());
 
-        if ($entity === null) {
+        if (null === $entity) {
             return null;
         }
 
@@ -56,7 +55,7 @@ final class DoctrineEstimationRepository implements EstimationRepository
     {
         $entity = $this->em->find(EstimationEntity::class, $estimation->id()->value());
 
-        if ($entity !== null) {
+        if (null !== $entity) {
             $this->em->remove($entity);
             $this->em->flush();
         }

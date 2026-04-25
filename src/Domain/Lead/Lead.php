@@ -6,12 +6,13 @@ namespace App\Domain\Lead;
 
 use App\Domain\Estimation\EstimationId;
 use App\Domain\Lead\Event\LeadCree;
-use App\Domain\Lead\Service\ScoringLead;
 use App\Domain\Lead\ValueObject\ContactLead;
 use App\Domain\Lead\ValueObject\ScoreLead;
 use App\Domain\Lead\ValueObject\SourceTracking;
 use App\Domain\Lead\ValueObject\StatutLead;
 use App\Domain\Lead\ValueObject\TypeCapture;
+use DateTimeImmutable;
+use DomainException;
 
 class Lead
 {
@@ -24,10 +25,10 @@ class Lead
         private SourceTracking $source,
         private ScoreLead $score,
         private StatutLead $statut,
-        private \DateTimeImmutable $createdAt,
+        private DateTimeImmutable $createdAt,
         private ?EstimationId $estimationId = null,
-        private ?\DateTimeImmutable $relancedAt = null,
-        private ?\DateTimeImmutable $contactedAt = null,
+        private ?DateTimeImmutable $relancedAt = null,
+        private ?DateTimeImmutable $contactedAt = null,
     ) {
     }
 
@@ -46,7 +47,7 @@ class Lead
             source: $source,
             score: $score,
             statut: StatutLead::NOUVEAU,
-            createdAt: new \DateTimeImmutable(),
+            createdAt: new DateTimeImmutable(),
             estimationId: $estimationId,
         );
 
@@ -62,10 +63,10 @@ class Lead
         SourceTracking $source,
         ScoreLead $score,
         StatutLead $statut,
-        \DateTimeImmutable $createdAt,
+        DateTimeImmutable $createdAt,
         ?EstimationId $estimationId = null,
-        ?\DateTimeImmutable $relancedAt = null,
-        ?\DateTimeImmutable $contactedAt = null,
+        ?DateTimeImmutable $relancedAt = null,
+        ?DateTimeImmutable $contactedAt = null,
     ): self {
         return new self(
             id: $id,
@@ -83,49 +84,89 @@ class Lead
 
     public function marquerContacte(): void
     {
-        if ($this->statut !== StatutLead::NOUVEAU) {
-            throw new \DomainException('Seul un lead nouveau peut être marqué comme contacté');
+        if (StatutLead::NOUVEAU !== $this->statut) {
+            throw new DomainException('Seul un lead nouveau peut être marqué comme contacté');
         }
         $this->statut = StatutLead::CONTACTE;
-        $this->contactedAt = new \DateTimeImmutable();
+        $this->contactedAt = new DateTimeImmutable();
     }
 
     public function convertir(): void
     {
-        if ($this->statut !== StatutLead::CONTACTE) {
-            throw new \DomainException('Seul un lead contacté peut être converti');
+        if (StatutLead::CONTACTE !== $this->statut) {
+            throw new DomainException('Seul un lead contacté peut être converti');
         }
         $this->statut = StatutLead::CONVERTI;
     }
 
     public function perdre(): void
     {
-        if ($this->statut === StatutLead::CONVERTI) {
-            throw new \DomainException('Un lead converti ne peut pas être perdu');
+        if (StatutLead::CONVERTI === $this->statut) {
+            throw new DomainException('Un lead converti ne peut pas être perdu');
         }
         $this->statut = StatutLead::PERDU;
     }
 
     public function enregistrerRelance(): void
     {
-        $this->relancedAt = new \DateTimeImmutable();
+        $this->relancedAt = new DateTimeImmutable();
     }
 
-    public function id(): LeadId { return $this->id; }
-    public function contact(): ContactLead { return $this->contact; }
-    public function typeCapture(): TypeCapture { return $this->typeCapture; }
-    public function source(): SourceTracking { return $this->source; }
-    public function score(): ScoreLead { return $this->score; }
-    public function statut(): StatutLead { return $this->statut; }
-    public function createdAt(): \DateTimeImmutable { return $this->createdAt; }
-    public function estimationId(): ?EstimationId { return $this->estimationId; }
-    public function relancedAt(): ?\DateTimeImmutable { return $this->relancedAt; }
-    public function contactedAt(): ?\DateTimeImmutable { return $this->contactedAt; }
+    public function id(): LeadId
+    {
+        return $this->id;
+    }
+
+    public function contact(): ContactLead
+    {
+        return $this->contact;
+    }
+
+    public function typeCapture(): TypeCapture
+    {
+        return $this->typeCapture;
+    }
+
+    public function source(): SourceTracking
+    {
+        return $this->source;
+    }
+
+    public function score(): ScoreLead
+    {
+        return $this->score;
+    }
+
+    public function statut(): StatutLead
+    {
+        return $this->statut;
+    }
+
+    public function createdAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function estimationId(): ?EstimationId
+    {
+        return $this->estimationId;
+    }
+
+    public function relancedAt(): ?DateTimeImmutable
+    {
+        return $this->relancedAt;
+    }
+
+    public function contactedAt(): ?DateTimeImmutable
+    {
+        return $this->contactedAt;
+    }
 
     public function pullDomainEvents(): array
     {
         $events = $this->domainEvents;
         $this->domainEvents = [];
+
         return $events;
     }
 }

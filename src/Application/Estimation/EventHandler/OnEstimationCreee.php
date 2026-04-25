@@ -32,10 +32,11 @@ final class OnEstimationCreee
             new ConsulterEstimationQuery($event->estimationId->value())
         );
 
-        if ($estimation === null) {
+        if (null === $estimation) {
             $this->logger->error('Estimation introuvable pour notification', [
                 'estimation_id' => $event->estimationId->value(),
             ]);
+
             return;
         }
 

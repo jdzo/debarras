@@ -15,6 +15,7 @@ use App\Domain\Lead\LeadId;
 use App\Domain\Lead\LeadRepository;
 use App\Domain\Lead\Service\ScoringLead;
 use App\Domain\Shared\MessageBus;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class CreerEstimationHandlerTest extends TestCase
@@ -25,7 +26,9 @@ class CreerEstimationHandlerTest extends TestCase
         $dispatchedEvents = [];
 
         $repository = new class($savedEstimation) implements EstimationRepository {
-            public function __construct(private ?Estimation &$saved) {}
+            public function __construct(private ?Estimation &$saved)
+            {
+            }
 
             public function save(Estimation $estimation): void
             {
@@ -37,7 +40,9 @@ class CreerEstimationHandlerTest extends TestCase
                 return null;
             }
 
-            public function delete(Estimation $estimation): void {}
+            public function delete(Estimation $estimation): void
+            {
+            }
 
             public function nextId(): EstimationId
             {
@@ -46,7 +51,9 @@ class CreerEstimationHandlerTest extends TestCase
         };
 
         $messageBus = new class($dispatchedEvents) implements MessageBus {
-            public function __construct(private array &$events) {}
+            public function __construct(private array &$events)
+            {
+            }
 
             public function dispatch(object $message): void
             {
@@ -55,10 +62,24 @@ class CreerEstimationHandlerTest extends TestCase
         };
 
         $leadRepository = new class implements LeadRepository {
-            public function save(Lead $lead): void {}
-            public function findById(LeadId $id): ?Lead { return null; }
-            public function nextId(): LeadId { return LeadId::generate(); }
-            public function findLeadsARelancer(\DateTimeImmutable $avant): array { return []; }
+            public function save(Lead $lead): void
+            {
+            }
+
+            public function findById(LeadId $id): ?Lead
+            {
+                return null;
+            }
+
+            public function nextId(): LeadId
+            {
+                return LeadId::generate();
+            }
+
+            public function findLeadsARelancer(DateTimeImmutable $avant): array
+            {
+                return [];
+            }
         };
 
         $handler = new CreerEstimationHandler(

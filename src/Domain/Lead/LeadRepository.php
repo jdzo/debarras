@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Lead;
 
+use DateTimeImmutable;
+
 interface LeadRepository
 {
     public function save(Lead $lead): void;
@@ -13,5 +15,5 @@ interface LeadRepository
     public function nextId(): LeadId;
 
     /** @return Lead[] */
-    public function findLeadsARelancer(\DateTimeImmutable $avant): array;
+    public function findLeadsARelancer(DateTimeImmutable $avant): array;
 }

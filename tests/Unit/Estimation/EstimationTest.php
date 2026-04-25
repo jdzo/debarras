@@ -16,25 +16,12 @@ use App\Domain\Estimation\ValueObject\Options;
 use App\Domain\Estimation\ValueObject\StatutEstimation;
 use App\Domain\Estimation\ValueObject\Superficie;
 use App\Domain\Estimation\ValueObject\TypeDeBien;
+use DateTimeImmutable;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class EstimationTest extends TestCase
 {
-    private function creerEstimation(): Estimation
-    {
-        return Estimation::creer(
-            id: EstimationId::generate(),
-            typeDeBien: TypeDeBien::MAISON,
-            superficie: Superficie::S_50_100,
-            encombrement: NiveauEncombrement::MEUBLE_NORMAL,
-            salete: NiveauSalete::PROPRE,
-            accessibilite: Accessibilite::RDC,
-            options: Options::aucune(),
-            coordonnees: Coordonnees::create('Jean Dupont', '0612345678', 'jean@example.com'),
-            calculateur: new CalculateurPrix(),
-        );
-    }
-
     public function testCreerEstimation(): void
     {
         $estimation = $this->creerEstimation();
@@ -85,7 +72,7 @@ class EstimationTest extends TestCase
         $estimation->envoyerDevis();
         $estimation->accepter();
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(DomainException::class);
         $estimation->refuser();
     }
 
@@ -102,11 +89,26 @@ class EstimationTest extends TestCase
             coordonnees: new Coordonnees('Test', '0600000000', 'test@test.com'),
             fourchette: new \App\Domain\Estimation\ValueObject\FourchetteEstimation(800, 1200),
             statut: StatutEstimation::CONTACTEE,
-            createdAt: new \DateTimeImmutable(),
+            createdAt: new DateTimeImmutable(),
             accessToken: bin2hex(random_bytes(32)),
         );
 
         $this->assertEmpty($estimation->pullDomainEvents());
         $this->assertEquals(StatutEstimation::CONTACTEE, $estimation->statut());
+    }
+
+    private function creerEstimation(): Estimation
+    {
+        return Estimation::creer(
+            id: EstimationId::generate(),
+            typeDeBien: TypeDeBien::MAISON,
+            superficie: Superficie::S_50_100,
+            encombrement: NiveauEncombrement::MEUBLE_NORMAL,
+            salete: NiveauSalete::PROPRE,
+            accessibilite: Accessibilite::RDC,
+            options: Options::aucune(),
+            coordonnees: Coordonnees::create('Jean Dupont', '0612345678', 'jean@example.com'),
+            calculateur: new CalculateurPrix(),
+        );
     }
 }

@@ -28,3 +28,8 @@
 # Uploads utilisateurs
 /public/uploads/estimations/*
 !/public/uploads/estimations/.gitkeep
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

@@ -34,6 +34,7 @@ class ContactController extends AbstractController
         $limiter = $contactFormLimiter->create($request->getClientIp() ?? 'anonymous');
         if (!$limiter->consume()->isAccepted()) {
             $this->addFlash('success', 'Trop de tentatives. Veuillez réessayer dans quelques minutes.');
+
             return $this->redirectToRoute('contact');
         }
 
@@ -48,20 +49,20 @@ class ContactController extends AbstractController
         $message = mb_substr($message, 0, 2000);
 
         $errors = [];
-        if ($nom === '') {
+        if ('' === $nom) {
             $errors[] = 'Le nom est obligatoire.';
         }
-        if ($telephone === '') {
+        if ('' === $telephone) {
             $errors[] = 'Le téléphone est obligatoire.';
         }
-        if ($telephone !== '' && !preg_match('/^[\d\s\+\-\.()]{6,20}$/', $telephone)) {
+        if ('' !== $telephone && !preg_match('/^[\d\s\+\-\.()]{6,20}$/', $telephone)) {
             $errors[] = 'Le format du téléphone n\'est pas valide.';
         }
-        if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if ('' !== $email && !filter_var($email, \FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'L\'adresse email n\'est pas valide.';
         }
 
-        if ($errors !== []) {
+        if ([] !== $errors) {
             return $this->render('contact/index.html.twig', [
                 'errors' => $errors,
                 'old' => ['nom' => $nom, 'telephone' => $telephone, 'email' => $email, 'message' => $message],

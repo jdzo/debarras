@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -59,11 +60,11 @@ class LeadEntity
     public ?string $landingPage = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    public \DateTimeImmutable $createdAt;
+    public DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    public ?\DateTimeImmutable $relancedAt = null;
+    public ?DateTimeImmutable $relancedAt = null;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    public ?\DateTimeImmutable $contactedAt = null;
+    public ?DateTimeImmutable $contactedAt = null;
 }

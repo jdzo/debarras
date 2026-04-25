@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\Messaging;
 
-use     App\Domain\Shared\MessageBus;
+use App\Domain\Shared\MessageBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 final class SymfonyMessageBus implements MessageBus
 {
-    public function __construct(private MessageBusInterface $bus) {}
+    public function __construct(private MessageBusInterface $bus)
+    {
+    }
 
     public function dispatch(object $message): void
     {

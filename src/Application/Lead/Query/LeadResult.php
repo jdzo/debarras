@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Lead\Query;
 
+use DateTimeImmutable;
+
 final readonly class LeadResult
 {
     public function __construct(
@@ -18,9 +20,9 @@ final readonly class LeadResult
         public string $statutCouleur,
         public ?string $estimationId,
         public array $source,
-        public \DateTimeImmutable $createdAt,
-        public ?\DateTimeImmutable $relancedAt,
-        public ?\DateTimeImmutable $contactedAt,
+        public DateTimeImmutable $createdAt,
+        public ?DateTimeImmutable $relancedAt,
+        public ?DateTimeImmutable $contactedAt,
     ) {
     }
 }

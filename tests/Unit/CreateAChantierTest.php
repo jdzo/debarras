@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit;
 
 use App\Domain\Chantier;
@@ -14,17 +16,17 @@ class CreateAChantierTest extends TestCase
     {
         $chantier = Chantier::create(
             ChantierId::generate(),
-            new ChantierNom("Mon premier chantier")
+            new ChantierNom('Mon premier chantier')
         );
 
-        $this->assertEquals("Mon premier chantier", $chantier->nom);
+        $this->assertEquals('Mon premier chantier', $chantier->nom);
     }
 
     public function testDemarrerAChantier(): void
     {
         $chantier = Chantier::create(
             ChantierId::generate(),
-            new ChantierNom("Mon premier chantier")
+            new ChantierNom('Mon premier chantier')
         );
 
         // Le chantier doit être en EN_PREPARATION avant de pouvoir être démarré

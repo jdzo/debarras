@@ -30,7 +30,7 @@ enum ZoneTarifaire: string
 
     public static function fromCodePostal(?string $codePostal): self
     {
-        if ($codePostal === null || $codePostal === '') {
+        if (null === $codePostal || '' === $codePostal) {
             return self::PROVINCE;
         }
 

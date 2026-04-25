@@ -22,7 +22,7 @@ final class ConsulterEstimationHandler
             EstimationId::fromString($query->estimationId)
         );
 
-        if ($estimation === null) {
+        if (null === $estimation) {
             return null;
         }
 

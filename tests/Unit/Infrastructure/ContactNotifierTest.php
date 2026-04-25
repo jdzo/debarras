@@ -17,7 +17,7 @@ class ContactNotifierTest extends TestCase
         $mailer = $this->createMock(MailerInterface::class);
         $mailer->expects($this->once())
             ->method('send')
-            ->willReturnCallback(function (Email $email) use (&$sentEmails) {
+            ->willReturnCallback(static function (Email $email) use (&$sentEmails): void {
                 $sentEmails[] = $email;
             });
 

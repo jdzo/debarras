@@ -7,6 +7,7 @@ namespace App\Domain\Lead\Event;
 use App\Domain\Lead\LeadId;
 use App\Domain\Lead\ValueObject\ScoreLead;
 use App\Domain\Lead\ValueObject\TypeCapture;
+use DateTimeImmutable;
 
 final readonly class LeadCree
 {
@@ -14,7 +15,7 @@ final readonly class LeadCree
         public LeadId $leadId,
         public ScoreLead $score,
         public TypeCapture $typeCapture,
-        public \DateTimeImmutable $createdAt,
+        public DateTimeImmutable $createdAt,
     ) {
     }
 }

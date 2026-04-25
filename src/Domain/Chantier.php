@@ -1,43 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain;
 
 use App\Domain\Enum\StatutChantier;
+use DomainException;
 
 class Chantier
 {
     public StatutChantier $statut;
 
-    /**
-     * @param ChantierId $id
-     * @param ChantierNom $nom
-     */
     public function __construct(
-        public ChantierId  $id,
+        public ChantierId $id,
         public ChantierNom $nom,
-    )
-    {
+    ) {
         $this->statut = StatutChantier::EN_ATTENTE;
     }
 
-    /**
-     * @param ChantierId $id
-     * @param ChantierNom $nom
-     * @return self
-     */
     public static function create(
-        ChantierId  $id,
+        ChantierId $id,
         ChantierNom $nom,
-
-    ): self
-    {
-        return new Chantier(id: $id, nom: $nom);
+    ): self {
+        return new self(id: $id, nom: $nom);
     }
 
     public function demarrer(): self
     {
-        if ($this->statut !== StatutChantier::EN_PREPARATION) {
-            throw new \DomainException("Le chantier ne peut pas être démarré");
+        if (StatutChantier::EN_PREPARATION !== $this->statut) {
+            throw new DomainException('Le chantier ne peut pas être démarré');
         }
 
         $chantier = new self($this->id, $this->nom);

@@ -33,18 +33,19 @@ final class ListerLeadsHandler
             ->select('COUNT(l.id)')
             ->from(LeadEntity::class, 'l');
 
-        if ($query->statut !== null && $query->statut !== '') {
+        if (null !== $query->statut && '' !== $query->statut) {
             $qb->andWhere('l.statut = :statut')->setParameter('statut', $query->statut);
             $countQb->andWhere('l.statut = :statut')->setParameter('statut', $query->statut);
         }
 
-        if ($query->score !== null && $query->score !== '') {
+        if (null !== $query->score && '' !== $query->score) {
             $qb->andWhere('l.score = :score')->setParameter('score', $query->score);
             $countQb->andWhere('l.score = :score')->setParameter('score', $query->score);
         }
 
-        if ($query->recherche !== null && $query->recherche !== '') {
-            $like = '%' . $query->recherche . '%';
+        if (null !== $query->recherche && '' !== $query->recherche) {
+            $escaped = str_replace(['%', '_'], ['\\%', '\\_'], $query->recherche);
+            $like = '%' . $escaped . '%';
             $where = 'l.nom LIKE :q OR l.email LIKE :q OR l.telephone LIKE :q';
             $qb->andWhere($where)->setParameter('q', $like);
             $countQb->andWhere($where)->setParameter('q', $like);

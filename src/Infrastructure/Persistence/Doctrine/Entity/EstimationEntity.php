@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -69,7 +70,7 @@ class EstimationEntity
     public string $accessToken;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    public \DateTimeImmutable $createdAt;
+    public DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $commentaire = null;

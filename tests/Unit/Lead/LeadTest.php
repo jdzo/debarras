@@ -12,21 +12,11 @@ use App\Domain\Lead\ValueObject\ScoreLead;
 use App\Domain\Lead\ValueObject\SourceTracking;
 use App\Domain\Lead\ValueObject\StatutLead;
 use App\Domain\Lead\ValueObject\TypeCapture;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class LeadTest extends TestCase
 {
-    private function creerLead(ScoreLead $score = ScoreLead::WARM): Lead
-    {
-        return Lead::creer(
-            id: LeadId::generate(),
-            contact: new ContactLead('Jean Dupont', '0612345678', 'jean@example.com'),
-            typeCapture: TypeCapture::ESTIMATION_COMPLETE,
-            source: SourceTracking::empty(),
-            score: $score,
-        );
-    }
-
     public function testCreerEmetUnEvenement(): void
     {
         $lead = $this->creerLead();
@@ -64,7 +54,7 @@ class LeadTest extends TestCase
     {
         $lead = $this->creerLead();
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(DomainException::class);
         $lead->convertir();
     }
 
@@ -82,7 +72,7 @@ class LeadTest extends TestCase
         $lead->marquerContacte();
         $lead->convertir();
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(DomainException::class);
         $lead->perdre();
     }
 
@@ -101,5 +91,16 @@ class LeadTest extends TestCase
         $lead->pullDomainEvents();
 
         $this->assertEmpty($lead->pullDomainEvents());
+    }
+
+    private function creerLead(ScoreLead $score = ScoreLead::WARM): Lead
+    {
+        return Lead::creer(
+            id: LeadId::generate(),
+            contact: new ContactLead('Jean Dupont', '0612345678', 'jean@example.com'),
+            typeCapture: TypeCapture::ESTIMATION_COMPLETE,
+            source: SourceTracking::empty(),
+            score: $score,
+        );
     }
 }

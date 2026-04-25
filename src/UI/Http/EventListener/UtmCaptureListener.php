@@ -34,17 +34,17 @@ final class UtmCaptureListener
         $utm = [];
         foreach (self::UTM_PARAMS as $param) {
             $value = $request->query->get($param);
-            if ($value !== null && $value !== '') {
+            if (null !== $value && '' !== $value) {
                 $utm[$param] = self::sanitize($value);
             }
         }
 
-        if ($utm === []) {
+        if ([] === $utm) {
             return;
         }
 
         $referrer = $request->headers->get('referer');
-        $utm['referrer'] = $referrer !== null ? self::sanitizeUrl($referrer) : null;
+        $utm['referrer'] = null !== $referrer ? self::sanitizeUrl($referrer) : null;
         $utm['landing_page'] = self::sanitizeUrl($request->getUri());
 
         $session->set(self::SESSION_KEY, $utm);
@@ -54,12 +54,13 @@ final class UtmCaptureListener
     {
         $value = strip_tags($value);
         $value = str_replace(["\r", "\n", "\t"], '', $value);
+
         return mb_substr($value, 0, 200);
     }
 
     private static function sanitizeUrl(?string $url): ?string
     {
-        if ($url === null) {
+        if (null === $url) {
             return null;
         }
 

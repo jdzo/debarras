@@ -36,15 +36,27 @@ class ConsulterEstimationHandlerTest extends TestCase
         );
 
         $repository = new class($estimation) implements EstimationRepository {
-            public function __construct(private Estimation $estimation) {}
+            public function __construct(private Estimation $estimation)
+            {
+            }
 
-            public function save(Estimation $estimation): void {}
+            public function save(Estimation $estimation): void
+            {
+            }
+
             public function findById(EstimationId $id): ?Estimation
             {
                 return $id->value() === $this->estimation->id()->value() ? $this->estimation : null;
             }
-            public function delete(Estimation $estimation): void {}
-            public function nextId(): EstimationId { return EstimationId::generate(); }
+
+            public function delete(Estimation $estimation): void
+            {
+            }
+
+            public function nextId(): EstimationId
+            {
+                return EstimationId::generate();
+            }
         };
 
         $handler = new ConsulterEstimationHandler($repository);
@@ -59,11 +71,24 @@ class ConsulterEstimationHandlerTest extends TestCase
 
     public function testConsulterEstimationInexistante(): void
     {
-        $repository = new class() implements EstimationRepository {
-            public function save(Estimation $estimation): void {}
-            public function findById(EstimationId $id): ?Estimation { return null; }
-            public function delete(Estimation $estimation): void {}
-            public function nextId(): EstimationId { return EstimationId::generate(); }
+        $repository = new class implements EstimationRepository {
+            public function save(Estimation $estimation): void
+            {
+            }
+
+            public function findById(EstimationId $id): ?Estimation
+            {
+                return null;
+            }
+
+            public function delete(Estimation $estimation): void
+            {
+            }
+
+            public function nextId(): EstimationId
+            {
+                return EstimationId::generate();
+            }
         };
 
         $handler = new ConsulterEstimationHandler($repository);

@@ -6,6 +6,7 @@ namespace App\Infrastructure\Console;
 
 use App\Domain\Lead\LeadRepository;
 use App\Infrastructure\Notification\LeadNotifier;
+use DateTimeImmutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -25,23 +26,23 @@ final class RelancerLeadsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $avant24h = new \DateTimeImmutable('-24 hours');
+        $avant24h = new DateTimeImmutable('-24 hours');
         $leads = $this->repository->findLeadsARelancer($avant24h);
 
         $count = 0;
         foreach ($leads as $lead) {
             $contact = $lead->contact();
 
-            if ($contact->email !== null) {
+            if (null !== $contact->email) {
                 $this->notifier->envoyerRelance($contact->nom, $contact->email);
             }
 
             $lead->enregistrerRelance();
             $this->repository->save($lead);
-            $count++;
+            ++$count;
         }
 
-        $this->logger->info("Relance terminée", ['leads_relancés' => $count]);
+        $this->logger->info('Relance terminée', ['leads_relancés' => $count]);
         $output->writeln(sprintf('%d lead(s) relancé(s).', $count));
 
         return Command::SUCCESS;

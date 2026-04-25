@@ -18,6 +18,7 @@ final class PhotoUploader
 
     /**
      * @param UploadedFile[] $files
+     *
      * @return string[] Noms de fichiers uploadés
      */
     public function upload(array $files, string $estimationId): array
@@ -39,12 +40,12 @@ final class PhotoUploader
                 continue;
             }
 
-            if (@getimagesize($file->getPathname()) === false) {
+            if (false === @getimagesize($file->getPathname())) {
                 continue;
             }
 
             if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0755, true);
+                mkdir($targetDir, 0o750, true);
             }
 
             $extension = $file->guessExtension() ?? 'jpg';

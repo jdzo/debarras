@@ -16,6 +16,8 @@ use App\Domain\Estimation\ValueObject\StatutEstimation;
 use App\Domain\Estimation\ValueObject\Superficie;
 use App\Domain\Estimation\ValueObject\TypeDeBien;
 use App\Domain\Estimation\ValueObject\ZoneTarifaire;
+use DateTimeImmutable;
+use DomainException;
 
 class Estimation
 {
@@ -32,7 +34,7 @@ class Estimation
         private Coordonnees $coordonnees,
         private FourchetteEstimation $fourchette,
         private StatutEstimation $statut,
-        private \DateTimeImmutable $createdAt,
+        private DateTimeImmutable $createdAt,
         private string $accessToken,
         private ?string $commentaire = null,
         private array $photos = [],
@@ -74,7 +76,7 @@ class Estimation
             coordonnees: $coordonnees,
             fourchette: $fourchette,
             statut: StatutEstimation::NOUVELLE,
-            createdAt: new \DateTimeImmutable(),
+            createdAt: new DateTimeImmutable(),
             accessToken: bin2hex(random_bytes(32)),
             commentaire: $commentaire,
             photos: $photos,
@@ -99,7 +101,7 @@ class Estimation
         Coordonnees $coordonnees,
         FourchetteEstimation $fourchette,
         StatutEstimation $statut,
-        \DateTimeImmutable $createdAt,
+        DateTimeImmutable $createdAt,
         string $accessToken,
         ?string $commentaire = null,
         array $photos = [],
@@ -124,8 +126,8 @@ class Estimation
 
     public function marquerContactee(): void
     {
-        if ($this->statut !== StatutEstimation::NOUVELLE) {
-            throw new \DomainException("Seule une estimation nouvelle peut être marquée comme contactée");
+        if (StatutEstimation::NOUVELLE !== $this->statut) {
+            throw new DomainException('Seule une estimation nouvelle peut être marquée comme contactée');
         }
 
         $this->statut = StatutEstimation::CONTACTEE;
@@ -134,7 +136,7 @@ class Estimation
     public function envoyerDevis(): void
     {
         if (!in_array($this->statut, [StatutEstimation::NOUVELLE, StatutEstimation::CONTACTEE], true)) {
-            throw new \DomainException("Le devis ne peut être envoyé qu'à une estimation nouvelle ou contactée");
+            throw new DomainException("Le devis ne peut être envoyé qu'à une estimation nouvelle ou contactée");
         }
 
         $this->statut = StatutEstimation::DEVIS_ENVOYE;
@@ -142,8 +144,8 @@ class Estimation
 
     public function accepter(): void
     {
-        if ($this->statut !== StatutEstimation::DEVIS_ENVOYE) {
-            throw new \DomainException("Seule une estimation avec devis envoyé peut être acceptée");
+        if (StatutEstimation::DEVIS_ENVOYE !== $this->statut) {
+            throw new DomainException('Seule une estimation avec devis envoyé peut être acceptée');
         }
 
         $this->statut = StatutEstimation::ACCEPTEE;
@@ -151,8 +153,8 @@ class Estimation
 
     public function refuser(): void
     {
-        if ($this->statut === StatutEstimation::ACCEPTEE) {
-            throw new \DomainException("Une estimation acceptée ne peut pas être refusée");
+        if (StatutEstimation::ACCEPTEE === $this->statut) {
+            throw new DomainException('Une estimation acceptée ne peut pas être refusée');
         }
 
         $this->statut = StatutEstimation::REFUSEE;
@@ -161,7 +163,7 @@ class Estimation
     public function expirer(): void
     {
         if (in_array($this->statut, [StatutEstimation::ACCEPTEE, StatutEstimation::REFUSEE], true)) {
-            throw new \DomainException("Cette estimation ne peut pas expirer");
+            throw new DomainException('Cette estimation ne peut pas expirer');
         }
 
         $this->statut = StatutEstimation::EXPIREE;
@@ -232,7 +234,7 @@ class Estimation
         return $this->statut;
     }
 
-    public function createdAt(): \DateTimeImmutable
+    public function createdAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }

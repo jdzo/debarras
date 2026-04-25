@@ -52,6 +52,7 @@ class EstimationController extends AbstractController
         $limiter = $estimationFormLimiter->create($request->getClientIp() ?? 'anonymous');
         if (!$limiter->consume()->isAccepted()) {
             $this->addFlash('error', 'Trop de tentatives. Veuillez réessayer dans quelques minutes.');
+
             return $this->redirectToRoute('estimation_formulaire');
         }
 
@@ -73,10 +74,10 @@ class EstimationController extends AbstractController
             nom: mb_substr($request->request->getString('nom'), 0, 100),
             telephone: mb_substr($request->request->getString('telephone'), 0, 20),
             email: mb_substr($request->request->getString('email'), 0, 180),
-            adresse: $request->request->get('adresse') !== null ? mb_substr($request->request->get('adresse'), 0, 255) : null,
-            codePostal: $request->request->get('code_postal') !== null ? mb_substr($request->request->get('code_postal'), 0, 10) : null,
-            ville: $request->request->get('ville') !== null ? mb_substr($request->request->get('ville'), 0, 100) : null,
-            commentaire: $request->request->get('commentaire') !== null ? mb_substr($request->request->get('commentaire'), 0, 2000) : null,
+            adresse: null !== $request->request->get('adresse') ? mb_substr($request->request->get('adresse'), 0, 255) : null,
+            codePostal: null !== $request->request->get('code_postal') ? mb_substr($request->request->get('code_postal'), 0, 10) : null,
+            ville: null !== $request->request->get('ville') ? mb_substr($request->request->get('ville'), 0, 100) : null,
+            commentaire: null !== $request->request->get('commentaire') ? mb_substr($request->request->get('commentaire'), 0, 2000) : null,
             photos: $photos,
             utmSource: $utm['utm_source'] ?? null,
             utmMedium: $utm['utm_medium'] ?? null,
@@ -102,7 +103,7 @@ class EstimationController extends AbstractController
     {
         $result = $handler(new ConsulterEstimationQuery($id));
 
-        if ($result === null) {
+        if (null === $result) {
             throw $this->createNotFoundException('Estimation introuvable');
         }
 

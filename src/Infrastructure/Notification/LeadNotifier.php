@@ -22,7 +22,7 @@ final readonly class LeadNotifier
         $email = (new TemplatedEmail())
             ->from(new Address($this->fromEmail, 'ClearWay Débarras'))
             ->to($this->adminEmail)
-            ->subject(($score === 'Chaud' ? '[URGENT] ' : '') . 'Nouveau lead - ' . str_replace(["\r", "\n"], '', $nom) . ' (' . $score . ')')
+            ->subject(('Chaud' === $score ? '[URGENT] ' : '') . 'Nouveau lead - ' . str_replace(["\r", "\n"], '', $nom) . ' (' . $score . ')')
             ->htmlTemplate('email/lead_admin.html.twig')
             ->context([
                 'nom' => $nom,
@@ -36,7 +36,7 @@ final readonly class LeadNotifier
 
     public function envoyerRelance(string $nom, string $clientEmail): void
     {
-        if (!filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($clientEmail, \FILTER_VALIDATE_EMAIL)) {
             return;
         }
 

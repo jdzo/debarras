@@ -36,16 +36,16 @@ final class ScoringLead
         ?NiveauEncombrement $encombrement,
         ?int $prixEstime,
     ): bool {
-        if ($salete === NiveauSalete::DIOGENE) {
+        if (NiveauSalete::DIOGENE === $salete) {
             return true;
         }
-        if ($superficie === Superficie::S_200_PLUS) {
+        if (Superficie::S_200_PLUS === $superficie) {
             return true;
         }
-        if ($prixEstime !== null && $prixEstime > 2000) {
+        if (null !== $prixEstime && $prixEstime > 2000) {
             return true;
         }
-        if ($encombrement === NiveauEncombrement::TRES_ENCOMBRE && $salete !== null && $salete !== NiveauSalete::PROPRE) {
+        if (NiveauEncombrement::TRES_ENCOMBRE === $encombrement && null !== $salete && NiveauSalete::PROPRE !== $salete) {
             return true;
         }
 
@@ -58,16 +58,16 @@ final class ScoringLead
         ?NiveauEncombrement $encombrement,
         ?int $prixEstime,
     ): bool {
-        if ($typeCapture === TypeCapture::ESTIMATION_COMPLETE) {
+        if (TypeCapture::ESTIMATION_COMPLETE === $typeCapture) {
             return true;
         }
-        if ($superficie === Superficie::S_100_200) {
+        if (Superficie::S_100_200 === $superficie) {
             return true;
         }
-        if ($prixEstime !== null && $prixEstime > 800) {
+        if (null !== $prixEstime && $prixEstime > 800) {
             return true;
         }
-        if ($encombrement === NiveauEncombrement::TRES_ENCOMBRE) {
+        if (NiveauEncombrement::TRES_ENCOMBRE === $encombrement) {
             return true;
         }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Estimation\Query;
 
+use DateTimeImmutable;
+
 final readonly class EstimationResult
 {
     public function __construct(
@@ -20,7 +22,7 @@ final readonly class EstimationResult
         public string $fourchette,
         public string $statut,
         public string $statutCouleur,
-        public \DateTimeImmutable $createdAt,
+        public DateTimeImmutable $createdAt,
         public ?string $commentaire,
         public array $photos,
         public string $accessToken,

@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\UI\Http\Controller;
 
 use App\Application\Estimation\Query\ConsulterEstimationHandler;
+use App\Application\Estimation\Query\ConsulterEstimationQuery;
 use App\Application\Estimation\Query\EstimationResult;
+use App\Application\Estimation\Query\ListerEstimationsHandler;
+use App\Application\Estimation\Query\ListerEstimationsQuery;
 use App\Application\Lead\Query\ListerLeadsHandler;
 use App\Application\Lead\Query\ListerLeadsQuery;
+use App\Domain\Estimation\EstimationId;
+use App\Domain\Estimation\EstimationRepository;
+use App\Domain\Estimation\ValueObject\StatutEstimation;
 use App\Domain\Lead\LeadId;
 use App\Domain\Lead\LeadRepository;
 use App\Domain\Lead\ValueObject\ScoreLead;
 use App\Domain\Lead\ValueObject\StatutLead;
-use App\Application\Estimation\Query\ConsulterEstimationQuery;
-use App\Application\Estimation\Query\ListerEstimationsHandler;
-use App\Application\Estimation\Query\ListerEstimationsQuery;
-use App\Domain\Estimation\EstimationId;
-use App\Domain\Estimation\EstimationRepository;
-use App\Domain\Estimation\ValueObject\StatutEstimation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +60,7 @@ class AdminController extends AbstractController
     {
         $result = $handler(new ListerEstimationsQuery(limit: 10000));
 
-        return new StreamedResponse(function () use ($result) {
+        return new StreamedResponse(static function () use ($result): void {
             $handle = fopen('php://output', 'w');
             fputcsv($handle, ['Date', 'Nom', 'Telephone', 'Email', 'Type', 'Superficie', 'Estimation', 'Statut']);
 
@@ -118,7 +118,7 @@ class AdminController extends AbstractController
 
         $lead = $leadRepository->findById(LeadId::fromString($id));
 
-        if ($lead === null) {
+        if (null === $lead) {
             throw $this->createNotFoundException('Lead introuvable');
         }
 
@@ -136,40 +136,12 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_leads');
     }
 
-    /**
-     * @param EstimationResult[] $estimations
-     * @return array{total: int, nouvelles: int, acceptees: int, ca_potentiel: int}
-     */
-    private function computeStats(array $estimations): array
-    {
-        $nouvelles = 0;
-        $acceptees = 0;
-        $caPotentiel = 0;
-
-        foreach ($estimations as $estimation) {
-            if ($estimation->statutCouleur === 'info') {
-                $nouvelles++;
-            }
-            if ($estimation->statutCouleur === 'success') {
-                $acceptees++;
-                $caPotentiel += $estimation->prixMin;
-            }
-        }
-
-        return [
-            'total' => count($estimations),
-            'nouvelles' => $nouvelles,
-            'acceptees' => $acceptees,
-            'ca_potentiel' => $caPotentiel,
-        ];
-    }
-
     #[Route('/estimation/{id}', name: 'admin_estimation_detail')]
     public function detail(string $id, ConsulterEstimationHandler $handler): Response
     {
         $estimation = $handler(new ConsulterEstimationQuery($id));
 
-        if ($estimation === null) {
+        if (null === $estimation) {
             throw $this->createNotFoundException('Estimation introuvable');
         }
 
@@ -190,7 +162,7 @@ class AdminController extends AbstractController
 
         $estimation = $repository->findById(EstimationId::fromString($id));
 
-        if ($estimation === null) {
+        if (null === $estimation) {
             throw $this->createNotFoundException('Estimation introuvable');
         }
 
@@ -210,5 +182,34 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Statut mis à jour avec succès.');
 
         return $this->redirectToRoute('admin_estimation_detail', ['id' => $id]);
+    }
+
+    /**
+     * @param EstimationResult[] $estimations
+     *
+     * @return array{total: int, nouvelles: int, acceptees: int, ca_potentiel: int}
+     */
+    private function computeStats(array $estimations): array
+    {
+        $nouvelles = 0;
+        $acceptees = 0;
+        $caPotentiel = 0;
+
+        foreach ($estimations as $estimation) {
+            if ('info' === $estimation->statutCouleur) {
+                ++$nouvelles;
+            }
+            if ('success' === $estimation->statutCouleur) {
+                ++$acceptees;
+                $caPotentiel += $estimation->prixMin;
+            }
+        }
+
+        return [
+            'total' => count($estimations),
+            'nouvelles' => $nouvelles,
+            'acceptees' => $acceptees,
+            'ca_potentiel' => $caPotentiel,
+        ];
     }
 }

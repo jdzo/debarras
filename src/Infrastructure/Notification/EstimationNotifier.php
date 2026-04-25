@@ -21,7 +21,7 @@ final class EstimationNotifier
     public function envoyerConfirmationClient(EstimationResult $estimation): void
     {
         $clientEmail = $estimation->coordonnees['email'];
-        if (!filter_var($clientEmail, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($clientEmail, \FILTER_VALIDATE_EMAIL)) {
             return;
         }
 
