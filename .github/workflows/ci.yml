@@ -56,6 +56,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction --no-scripts
 
+      - name: PHP CS Fixer (dry-run)
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --no-interaction
+
       - name: Lint Twig
         run: php bin/console lint:twig templates/ --env=test
 
