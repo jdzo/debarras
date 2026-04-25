@@ -352,7 +352,10 @@
         </style>
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app', {'nonce': app.request.attributes.get('csp_nonce')}) }}{% endblock %}
+            {% block importmap %}
+                {% set _nonce = app.request.attributes.get('csp_nonce') %}
+                {{ importmap('app', _nonce ? {'nonce': _nonce} : {}) }}
+            {% endblock %}
         {% endblock %}
     </head>
     <body>
