@@ -65,6 +65,9 @@ jobs:
       - name: Lint Container
         run: php bin/console lint:container --env=test
 
+      - name: Warm up cache
+        run: php bin/console cache:warmup --env=test
+
       - name: Install importmap assets
         run: php bin/console importmap:install --env=test
 
