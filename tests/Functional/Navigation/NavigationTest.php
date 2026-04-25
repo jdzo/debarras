@@ -53,7 +53,7 @@ class NavigationTest extends WebTestCase
         $this->assertStringContainsString('ClearWay', $footer->text());
         $this->assertGreaterThan(0, $footer->filter('a[href="/debarras/rennes"]')->count());
         $this->assertGreaterThan(0, $footer->filter('a[href="/debarras/vitre"]')->count());
-        $this->assertGreaterThan(0, $footer->filter('.footer-links')->count());
+        $this->assertGreaterThan(0, $footer->filter('.footer-col')->count(), "Footer HTML:\n" . $footer->html());
     }
 
     public function testStickyCta(): void
