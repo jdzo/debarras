@@ -28,7 +28,7 @@ jobs:
 
     env:
       APP_ENV: test
-      APP_DEBUG: 0
+      APP_DEBUG: 1
       DATABASE_URL: "postgresql://app:app@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
 
     steps:
