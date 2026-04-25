@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #0f172a; }
+        .wrap { max-width: 560px; margin: 0 auto; padding: 32px 20px; }
+        .header { text-align: center; margin-bottom: 24px; }
+        .header h1 { font-size: 22px; margin: 0 0 4px; }
+        .header p { color: #6b7280; margin: 0; font-size: 14px; }
+        .price-box { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px; }
+        .price-box .label { font-size: 13px; color: #15803d; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 4px; }
+        .price-box .range { font-size: 28px; font-weight: 800; color: #15803d; }
+        .price-box .note { font-size: 12px; color: #6b7280; margin-top: 4px; }
+        .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 16px; border: 1px solid #f1f5f9; }
+        .card h3 { margin: 0 0 12px; font-size: 15px; }
+        .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #f8fafc; }
+        .row:last-child { border-bottom: none; }
+        .row .key { color: #6b7280; }
+        .row .val { font-weight: 600; }
+        .footer { text-align: center; margin-top: 24px; font-size: 12px; color: #9ca3af; }
+        .cta { display: inline-block; margin-top: 16px; padding: 12px 28px; background: #16a34a; color: #fff; border-radius: 8px; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="header">
+        <h1>Votre estimation ClearWay</h1>
+        <p>Merci {{ estimation.coordonnees.nom }}, voici votre estimation de débarras.</p>
+    </div>
+
+    <div class="price-box">
+        <div class="label">Estimation</div>
+        <div class="range">{{ estimation.fourchette }}</div>
+        <div class="note">Prix indicatif incluant main-d'oeuvre et évacuation</div>
+    </div>
+
+    <div class="card">
+        <h3>Récapitulatif</h3>
+        <div class="row">
+            <span class="key">Type de bien</span>
+            <span class="val">{{ estimation.typeDeBien }}</span>
+        </div>
+        <div class="row">
+            <span class="key">Superficie</span>
+            <span class="val">{{ estimation.superficie }}</span>
+        </div>
+        <div class="row">
+            <span class="key">Encombrement</span>
+            <span class="val">{{ estimation.encombrement }}</span>
+        </div>
+        <div class="row">
+            <span class="key">Saleté</span>
+            <span class="val">{{ estimation.salete }}</span>
+        </div>
+        <div class="row">
+            <span class="key">Accessibilité</span>
+            <span class="val">{{ estimation.accessibilite }}</span>
+        </div>
+    </div>
+
+    {% if estimation.options.nettoyage or estimation.options.desinfection or estimation.options.demontage %}
+    <div class="card">
+        <h3>Options</h3>
+        {% if estimation.options.nettoyage %}
+        <div class="row"><span class="key">Nettoyage</span><span class="val">+150 €</span></div>
+        {% endif %}
+        {% if estimation.options.desinfection %}
+        <div class="row"><span class="key">Désinfection</span><span class="val">+200 €</span></div>
+        {% endif %}
+        {% if estimation.options.demontage %}
+        <div class="row"><span class="key">Démontage meubles</span><span class="val">+100 €</span></div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div style="text-align:center;">
+        <p style="color:#6b7280;font-size:14px;">Un conseiller vous recontactera dans les plus brefs délais pour affiner cette estimation.</p>
+    </div>
+
+    <div class="footer">
+        <p>ClearWay Débarras — Service professionnel de débarras</p>
+        <p>Cet email a été envoyé suite à votre demande d'estimation sur notre site.</p>
+    </div>
+</div>
+</body>
+</html>

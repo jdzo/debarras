@@ -1,0 +1,218 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras cave grenier garage Vitré — Vidage rapide | ClearWay{% endblock %}
+{% block meta_description %}Débarras cave, grenier et garage à Vitré et en Ille-et-Vilaine. Vidage complet, évacuation des objets lourds. Estimation gratuite en 2 min.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras cave grenier garage Vitré",
+    "description": "Vidage complet de caves, greniers et garages encombrés à Vitré et en Ille-et-Vilaine.",
+    "url": "{{ url('services_detail', {slug: 'cave-grenier'}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33XXXXXXXXX",
+        "email": "contact@clearway.fr"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "Vitré"
+    },
+    "serviceType": "Débarras cave grenier garage"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Pouvez-vous accéder à une cave ou un grenier difficile d'accès ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, nous sommes équipés pour les accès difficiles : escaliers étroits, trappes de grenier, caves en sous-sol. Nous adaptons notre logistique à la configuration de votre bien."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Combien coûte le vidage d'une cave ou d'un grenier ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le prix dépend du volume à évacuer. Pour une cave ou un grenier standard, comptez entre 200 et 1 000 €. Un garage plein peut aller jusqu'à 1 500 €. Notre estimation en ligne vous donne un premier prix en 2 minutes."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Évacuez-vous les objets lourds (machines à laver, meubles massifs) ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, nous prenons en charge tous les objets, y compris les plus lourds et volumineux : machines à laver, réfrigérateurs, armoires, sommiers, outils de jardin, etc."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que deviennent les objets évacués ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les objets en bon état sont donnés à des associations locales. Les matériaux recyclables (métaux, bois, carton) sont triés et envoyés en filière de recyclage. Seuls les déchets non valorisables vont en décharge."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ url('services') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Débarras cave, grenier & garage"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{% include 'services/_landing-styles.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="lp-hero">
+    <div class="container">
+        <div class="lp-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('services') }}">Services</a> / Cave, grenier & garage
+        </div>
+        <h1>Videz votre cave, grenier<br>ou garage à <span>Vitré</span></h1>
+        <p class="intro">
+            Votre cave déborde, le grenier est inaccessible, le garage ne sert plus à garer la voiture ?
+            Ça fait des années que vous repoussez le tri. Bonne nouvelle : vous n'avez plus à le faire.
+            On vide tout, on trie, on évacue. Vous récupérez votre espace.
+        </p>
+        <a href="{{ path('estimation_formulaire') }}" class="btn-hero">Estimer le vidage →</a>
+    </div>
+</section>
+
+<div class="lp-content">
+    <div class="lp-editorial">
+        <h2>Ce grenier (ou cette cave) que vous repoussez depuis des années</h2>
+        <p>
+            Soyons honnêtes : on a tous un endroit dans la maison qu'on évite depuis trop longtemps. Le grenier avec les cartons du dernier déménagement — il y a dix ans. La cave où s'entassent les vieux meubles, les pots de peinture et l'électroménager hors service. Le garage où on ne peut plus garer la voiture depuis 2015.
+        </p>
+        <p>
+            Dans le Pays de Vitré, beaucoup de maisons ont des <strong>dépendances généreuses</strong> — grandes caves, greniers sous combles, garages doubles, parfois même des granges attenantes.
+            C'est pratique pour stocker... jusqu'au jour où il faut vendre la maison, rénover les combles, ou simplement retrouver un espace vivable.
+            Et là, face à l'ampleur de la tâche, on repousse encore.
+        </p>
+        <div class="lp-highlight">
+            <p><strong>Ce qui vous prendrait un week-end entier (voire deux), nous le faisons en quelques heures.</strong> Pas d'allers-retours à la déchetterie, pas de mal de dos, pas de disputes pour savoir quoi garder. On vide, on trie, on évacue.</p>
+        </div>
+        <p>
+            Nos interventions les plus courantes à <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Vitré</a>, Châteaubourg et La Guerche-de-Bretagne : vidage de greniers avant isolation des combles, débarras de caves avant travaux d'étanchéité, et nettoyage de garages pour enfin retrouver de la place.
+            Les objets lourds et encombrants ne sont pas un problème — vieilles machines à laver, sommiers, cadres de vélo rouillés, tourets de câble — <strong>on évacue tout</strong>, y compris par des accès étroits (trappes, escaliers en colimaçon, sous-sols enterrés).
+        </p>
+        <p>
+            Et parce qu'on n'est pas des sauvages : les objets en bon état partent chez <strong>Emmaüs ou au Secours Populaire</strong>, les métaux sont recyclés, le bois part en filière bois-énergie. Seuls les déchets réellement irrécupérables finissent en déchetterie. Vous récupérez votre espace, et votre conscience est tranquille.
+        </p>
+    </div>
+
+    <div class="lp-why">
+        <h2>Pourquoi ne pas le faire soi-même ?</h2>
+        <div class="lp-why-grid">
+            <div class="lp-why-card">
+                <span class="icon">⏱️</span>
+                <h3>Des heures (voire des jours) économisées</h3>
+                <p>Trier, charger, faire 10 allers-retours à la déchetterie... Nous le faisons en quelques heures, vous gagnez un week-end.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">💪</span>
+                <h3>Objets lourds et encombrants</h3>
+                <p>Vieux meubles, électroménager, cartons de 30 kg : on a l'équipement et les bras. Pas besoin de vous abîmer le dos.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🪜</span>
+                <h3>Accès difficiles ? On gère.</h3>
+                <p>Escalier en colimaçon, trappe de grenier, cave en sous-sol : on adapte notre logistique à la configuration de votre bien.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">♻️</span>
+                <h3>Tri et recyclage inclus</h3>
+                <p>On ne met pas tout en décharge. Les objets en bon état sont donnés, les matériaux recyclables sont triés.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lp-checklist">
+        <h2>Ce que comprend notre intervention</h2>
+        <ul>
+            <li>Vidage complet de la cave, du grenier ou du garage</li>
+            <li>Évacuation des objets lourds et volumineux (meubles, électroménager)</li>
+            <li>Démontage des étagères et rangements si nécessaire</li>
+            <li>Tri sur place : à garder, à donner, à recycler, à jeter</li>
+            <li>Recyclage des matériaux (métaux, bois, carton)</li>
+            <li>Don aux associations des objets en bon état</li>
+            <li>Nettoyage de l'espace vidé</li>
+        </ul>
+    </div>
+
+    <div class="lp-faq">
+        <h2>Questions fréquentes — Cave, grenier & garage</h2>
+        <details>
+            <summary>Pouvez-vous accéder à une cave ou un grenier difficile d'accès ?</summary>
+            <div class="faq-answer">
+                Oui, nous sommes équipés pour les accès difficiles : escaliers étroits, trappes de grenier, caves en sous-sol. Nous adaptons notre logistique à la configuration de votre bien.
+            </div>
+        </details>
+        <details>
+            <summary>Combien coûte le vidage d'une cave ou d'un grenier ?</summary>
+            <div class="faq-answer">
+                Le prix dépend du volume à évacuer. Pour une cave ou un grenier standard, comptez entre 200 et 1 000 €. Un garage plein peut aller jusqu'à 1 500 €. Notre estimation en ligne vous donne un premier prix en 2 minutes.
+            </div>
+        </details>
+        <details>
+            <summary>Évacuez-vous les objets lourds (machines à laver, meubles massifs) ?</summary>
+            <div class="faq-answer">
+                Oui, nous prenons en charge tous les objets, y compris les plus lourds et volumineux : machines à laver, réfrigérateurs, armoires, sommiers, outils de jardin, etc.
+            </div>
+        </details>
+        <details>
+            <summary>Que deviennent les objets évacués ?</summary>
+            <div class="faq-answer">
+                Les objets en bon état sont donnés à des associations locales. Les matériaux recyclables (métaux, bois, carton) sont triés et envoyés en filière de recyclage. Seuls les déchets non valorisables vont en décharge.
+            </div>
+        </details>
+    </div>
+
+    <div class="lp-testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">Notre grenier et notre cave étaient remplis depuis 20 ans. On repoussait toujours le moment de s'en occuper. L'équipe a tout vidé en une matinée. On a retrouvé un espace qu'on avait complètement oublié !</div>
+        <div class="author">
+            <span class="avatar">MR</span> Michel R., La Guerche-de-Bretagne
+        </div>
+    </div>
+
+    <div class="lp-cta">
+        <h2>Votre cave, grenier ou garage déborde ?</h2>
+        <p>Estimation gratuite en 2 minutes. On s'occupe du reste.</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras gratuitement →</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="lp-autres">
+        <h2>Nos autres services de débarras</h2>
+        <div class="lp-autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="lp-autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

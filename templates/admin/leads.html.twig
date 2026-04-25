@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leads - Admin{% endblock %}
+{% block sticky_cta %}{% endblock %}
+{% block modal_rappel %}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+    .admin-header h1 { font-size: 24px; margin: 0 0 4px; }
+    .admin-header .count { color: var(--muted); font-size: 14px; }
+    .admin-header { margin-bottom: 20px; }
+
+    .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .search-input { padding: 8px 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; flex: 1; min-width: 200px; }
+    .search-input:focus { outline: none; border-color: var(--accent); }
+
+    .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-btn {
+        padding: 6px 14px; border-radius: 999px; border: 1px solid #e5e7eb;
+        background: white; color: #374151; text-decoration: none; font-size: 13px; font-weight: 500;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th { text-align: left; padding: 10px 12px; border-bottom: 2px solid #f1f5f9; color: var(--muted); font-size: 12px; text-transform: uppercase; }
+    tbody td { padding: 12px; border-bottom: 1px solid #f8fafc; vertical-align: middle; }
+    tbody tr:hover { background: #fafbfc; }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-success { background: #dcfce7; color: #16a34a; }
+    .badge-warning { background: #fef9c3; color: #a16207; }
+    .badge-danger { background: #fee2e2; color: #dc2626; }
+    .badge-secondary { background: #f1f5f9; color: #475569; }
+
+    .nav-links-admin { margin-bottom: 20px; display: flex; gap: 16px; }
+    .nav-links-admin a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 15px; }
+    .nav-links-admin a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+    .action-form { display: inline; }
+    .action-btn { padding: 4px 10px; border-radius: 6px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .action-btn.contact { background: #fef9c3; color: #a16207; }
+    .action-btn.convertir { background: #dcfce7; color: #16a34a; }
+    .action-btn.perdre { background: #f1f5f9; color: #475569; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+
+    .pagination { display: flex; gap: 4px; justify-content: center; margin-top: 24px; }
+    .pagination a, .pagination span { padding: 8px 14px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 500; }
+    .pagination a { background: #f1f5f9; color: #374151; }
+    .pagination .current { background: var(--accent); color: white; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="admin-wrap">
+    <div class="nav-links-admin">
+        <a href="{{ path('admin_dashboard') }}">Estimations</a>
+        <a href="{{ path('admin_leads') }}" class="active">Leads</a>
+    </div>
+
+    <div class="admin-header">
+        <h1>Leads</h1>
+        <span class="count">{{ total }} lead{{ total > 1 ? 's' : '' }}</span>
+    </div>
+
+    <div class="toolbar">
+        <form method="get" action="{{ path('admin_leads') }}" style="display:contents;">
+            <input type="text" name="q" class="search-input" placeholder="Rechercher par nom, email, tel..."
+                   value="{{ recherche ?? '' }}">
+            <button type="submit" class="action-btn contact">Rechercher</button>
+        </form>
+    </div>
+
+    <div class="filters">
+        <a href="{{ path('admin_leads') }}" class="filter-btn {{ statut_filtre is null and score_filtre is null ? 'active' }}">Tous</a>
+        {% for score in scores %}
+        <a href="{{ path('admin_leads', {score: score.value}) }}"
+           class="filter-btn {{ score_filtre == score.value ? 'active' }}">{{ score.label() }}</a>
+        {% endfor %}
+        |
+        {% for statut in statuts %}
+        <a href="{{ path('admin_leads', {statut: statut.value}) }}"
+           class="filter-btn {{ statut_filtre == statut.value ? 'active' }}">{{ statut.label() }}</a>
+        {% endfor %}
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;color:var(--accent-dark);padding:12px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:14px;">{{ message }}</div>
+    {% endfor %}
+
+    {% if leads is empty %}
+    <div class="empty-state">
+        <p>Aucun lead{% if statut_filtre %} avec ce filtre{% endif %}</p>
+    </div>
+    {% else %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Contact</th>
+                    <th>Type</th>
+                    <th>Score</th>
+                    <th>Statut</th>
+                    <th>Source</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads %}
+                <tr>
+                    <td>{{ lead.createdAt|date('d/m/Y H:i') }}</td>
+                    <td>
+                        <strong>{{ lead.nom }}</strong><br>
+                        <span style="color:var(--muted);font-size:12px;">{{ lead.telephone }}{% if lead.email %} · {{ lead.email }}{% endif %}</span>
+                    </td>
+                    <td>{{ lead.typeCapture }}</td>
+                    <td><span class="badge badge-{{ lead.scoreCouleur }}">{{ lead.score }}</span></td>
+                    <td><span class="badge badge-{{ lead.statutCouleur }}">{{ lead.statut }}</span></td>
+                    <td style="font-size:12px;color:var(--muted);">{{ lead.source.utm_source ?? '-' }}</td>
+                    <td>
+                        {% if lead.statutCouleur == 'info' %}
+                        <form class="action-form" method="post" action="{{ path('admin_lead_statut', {id: lead.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_statut') }}">
+                            <input type="hidden" name="action" value="contacter">
+                            <button class="action-btn contact">Contacter</button>
+                        </form>
+                        {% endif %}
+                        {% if lead.statutCouleur == 'warning' %}
+                        <form class="action-form" method="post" action="{{ path('admin_lead_statut', {id: lead.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_statut') }}">
+                            <input type="hidden" name="action" value="convertir">
+                            <button class="action-btn convertir">Convertir</button>
+                        </form>
+                        {% endif %}
+                        {% if lead.statutCouleur != 'success' %}
+                        <form class="action-form" method="post" action="{{ path('admin_lead_statut', {id: lead.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('admin_statut') }}">
+                            <input type="hidden" name="action" value="perdre">
+                            <button class="action-btn perdre">Perdu</button>
+                        </form>
+                        {% endif %}
+                        {% if lead.estimationId %}
+                        <a href="{{ path('admin_estimation_detail', {id: lead.estimationId}) }}" style="font-size:12px;color:var(--accent);">Estimation</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if pages > 1 %}
+    <div class="pagination">
+        {% for p in 1..pages %}
+            {% if p == page %}
+                <span class="current">{{ p }}</span>
+            {% else %}
+                <a href="{{ path('admin_leads', {page: p, statut: statut_filtre, score: score_filtre}) }}">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

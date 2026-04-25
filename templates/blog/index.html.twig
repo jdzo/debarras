@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog débarras — Conseils, guides et prix | ClearWay{% endblock %}
+{% block meta_description %}Guides pratiques sur le débarras : succession, prix au m3, syndrome de Diogène, cave et grenier. Conseils d'experts à Vitré et en Ille-et-Vilaine.{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .blog-header {
+        text-align: center;
+        padding: 48px 0 32px;
+    }
+    .blog-header h1 { font-size: 32px; font-weight: 900; margin: 0 0 8px; letter-spacing: -1px; }
+    .blog-header p { color: var(--muted); font-size: 17px; margin: 0; }
+
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        padding-bottom: 48px;
+    }
+    .blog-card {
+        background: var(--card);
+        border: 1px solid #e4e4e7;
+        border-radius: var(--radius);
+        padding: 28px;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.2s, transform 0.2s;
+    }
+    .blog-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .blog-card .meta {
+        font-size: 13px; color: var(--muted); margin-bottom: 12px;
+        display: flex; gap: 12px;
+    }
+    .blog-card h2 {
+        font-size: 20px; font-weight: 700; margin: 0 0 10px;
+        line-height: 1.3;
+    }
+    .blog-card p {
+        font-size: 15px; color: var(--muted); margin: 0 0 16px;
+        line-height: 1.6;
+    }
+    .blog-card .read-more {
+        color: var(--accent); font-weight: 600; font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="blog-header">
+        <h1>Guides & conseils débarras</h1>
+        <p>Tout ce qu'il faut savoir avant de faire vider un logement</p>
+    </div>
+
+    <div class="blog-grid">
+        {% for slug, article in articles %}
+        <a href="{{ path('blog_article', {slug: slug}) }}" class="blog-card">
+            <div class="meta">
+                <span>{{ article.date|date('d/m/Y') }}</span>
+                <span>{{ article.temps_lecture }} de lecture</span>
+            </div>
+            <h2>{{ article.titre }}</h2>
+            <p>{{ article.description }}</p>
+            <span class="read-more">Lire l'article →</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

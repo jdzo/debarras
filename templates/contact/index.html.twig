@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact — Débarras Vitré & Ille-et-Vilaine | ClearWay{% endblock %}
+{% block meta_description %}Contactez ClearWay pour votre débarras à Vitré et en Ille-et-Vilaine. Devis gratuit, réponse sous 2h. Téléphone, email ou formulaire.{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .contact-wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 20px;
+    }
+    .contact-header {
+        text-align: center;
+        margin-bottom: 36px;
+    }
+    .contact-header h1 { font-size: 32px; margin: 0 0 8px; }
+    .contact-header p { color: var(--muted); font-size: 17px; margin: 0; }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+    .contact-form {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 28px 24px;
+    }
+    .contact-form h2 { margin: 0 0 20px; font-size: 20px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #374151;
+    }
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+    }
+    .form-group textarea { resize: vertical; }
+    .btn-submit {
+        background: var(--accent);
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .info-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 24px;
+    }
+    .info-card h3 { margin: 0 0 8px; font-size: 17px; display: flex; align-items: center; gap: 8px; }
+    .info-card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .info-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    .flash-success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: var(--accent-dark);
+        padding: 14px 20px;
+        border-radius: var(--radius);
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    .flash-errors {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: var(--danger);
+        padding: 14px 20px;
+        border-radius: var(--radius);
+        margin-bottom: 20px;
+    }
+    .flash-errors ul { margin: 4px 0 0; padding-left: 20px; }
+
+    @media (max-width: 640px) {
+        .contact-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="contact-wrap">
+    <div class="contact-header">
+        <h1>Contactez-nous</h1>
+        <p>Une question ? Besoin d'un devis ? Nous sommes à votre écoute.</p>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">{{ message }}</div>
+    {% endfor %}
+
+    {% if errors is defined and errors is not empty %}
+        <div class="flash-errors">
+            <strong>Veuillez corriger les erreurs suivantes :</strong>
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="contact-grid">
+        <div class="contact-form">
+            <h2>Envoyez-nous un message</h2>
+            <form method="post" action="{{ path('contact_envoyer') }}" data-turbo="false">
+                <input type="hidden" name="_token" value="{{ csrf_token('contact') }}">
+                <div class="form-group">
+                    <label for="nom">Nom *</label>
+                    <input type="text" id="nom" name="nom" required placeholder="Votre nom"
+                           value="{{ old.nom ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone *</label>
+                    <input type="tel" id="telephone" name="telephone" required placeholder="06 12 34 56 78"
+                           value="{{ old.telephone ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="votre@email.com"
+                           value="{{ old.email ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5"
+                              placeholder="Décrivez votre besoin...">{{ old.message ?? '' }}</textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Envoyer le message</button>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <div class="info-card">
+                <h3>📞 Téléphone</h3>
+                <p>
+                    <a href="tel:+33123456789">01 23 45 67 89</a><br>
+                    Lun-Sam : 8h-18h
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>📧 Email</h3>
+                <p><a href="mailto:contact@clearway.fr">contact@clearway.fr</a></p>
+            </div>
+
+            <div class="info-card">
+                <h3>📍 Zone d'intervention</h3>
+                <p>Nous intervenons dans toute la France.<br>Devis gratuit et sans engagement.</p>
+            </div>
+
+            <div class="info-card">
+                <h3>⚡ Estimation rapide</h3>
+                <p>
+                    Obtenez une estimation en 2 minutes.<br>
+                    <a href="{{ path('estimation_formulaire') }}">Faire une estimation →</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

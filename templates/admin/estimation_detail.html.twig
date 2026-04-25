@@ -1,0 +1,189 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estimation {{ estimation.id[:8] }} - Admin{% endblock %}
+{% block sticky_cta %}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .admin-detail { max-width: 800px; margin: 0 auto; padding: 32px 20px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .detail-header h1 { font-size: 22px; margin: 0; }
+
+    .status-actions { margin-bottom: 24px; }
+    .status-actions h3 { font-size: 15px; margin: 0 0 10px; }
+    .actions-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .action-btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: opacity 0.15s;
+    }
+    .action-btn:hover { opacity: 0.85; }
+    .action-btn.contact { background: #fef9c3; color: #a16207; }
+    .action-btn.devis { background: #e0e7ff; color: #4338ca; }
+    .action-btn.accepter { background: #dcfce7; color: #16a34a; }
+    .action-btn.refuser { background: #fee2e2; color: #dc2626; }
+    .action-btn.expirer { background: #f1f5f9; color: #475569; }
+
+    .card { background: var(--card); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+    .card h3 { margin: 0 0 16px; font-size: 16px; }
+    .row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid #f1f5f9; }
+    .row:last-child { border-bottom: none; }
+    .row .key { color: var(--muted); }
+    .row .val { font-weight: 600; }
+
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-success { background: #dcfce7; color: #16a34a; }
+    .badge-warning { background: #fef9c3; color: #a16207; }
+    .badge-primary { background: #e0e7ff; color: #4338ca; }
+    .badge-danger { background: #fee2e2; color: #dc2626; }
+    .badge-secondary { background: #f1f5f9; color: #475569; }
+
+    .price-highlight {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+    }
+    .price-highlight .range { font-size: 28px; font-weight: 800; color: var(--accent-dark); }
+
+    .flash-success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: var(--accent-dark);
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+
+    .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .photos-grid img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        aspect-ratio: 1;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="admin-detail">
+    <div class="breadcrumb">
+        <a href="{{ path('admin_dashboard') }}">Estimations</a> / {{ estimation.id[:8] }}...
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="detail-header">
+        <h1>Estimation #{{ estimation.id[:8] }}</h1>
+        <span class="badge badge-{{ estimation.statutCouleur }}">{{ estimation.statut }}</span>
+    </div>
+
+    <div class="price-highlight">
+        <div class="range">{{ estimation.fourchette }}</div>
+    </div>
+
+    {# Actions de changement de statut #}
+    <div class="status-actions">
+        <h3>Changer le statut</h3>
+        <div class="actions-row">
+            {% set actions = {
+                'contacter': {'label': 'Marquer contacté', 'class': 'contact'},
+                'envoyer_devis': {'label': 'Devis envoyé', 'class': 'devis'},
+                'accepter': {'label': 'Accepter', 'class': 'accepter'},
+                'refuser': {'label': 'Refuser', 'class': 'refuser'},
+                'expirer': {'label': 'Expirer', 'class': 'expirer'},
+            } %}
+            {% for action, config in actions %}
+            <form method="post" action="{{ path('admin_estimation_statut', {id: estimation.id}) }}" style="display:inline;">
+                <input type="hidden" name="_token" value="{{ csrf_token('admin_statut') }}">
+                <input type="hidden" name="action" value="{{ action }}">
+                <button type="submit" class="action-btn {{ config.class }}">{{ config.label }}</button>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Contact</h3>
+        <div class="row">
+            <span class="key">Nom</span>
+            <span class="val">{{ estimation.coordonnees.nom }}</span>
+        </div>
+        <div class="row">
+            <span class="key">Téléphone</span>
+            <span class="val"><a href="tel:{{ estimation.coordonnees.telephone }}" style="color:var(--accent);text-decoration:none;">{{ estimation.coordonnees.telephone }}</a></span>
+        </div>
+        <div class="row">
+            <span class="key">Email</span>
+            <span class="val"><a href="mailto:{{ estimation.coordonnees.email }}" style="color:var(--accent);text-decoration:none;">{{ estimation.coordonnees.email }}</a></span>
+        </div>
+        {% if estimation.coordonnees.adresse %}
+        <div class="row">
+            <span class="key">Adresse</span>
+            <span class="val">{{ estimation.coordonnees.adresse }}{% if estimation.coordonnees.code_postal %}, {{ estimation.coordonnees.code_postal }}{% endif %}{% if estimation.coordonnees.ville %} {{ estimation.coordonnees.ville }}{% endif %}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3>Détails du bien</h3>
+        <div class="row"><span class="key">Type</span><span class="val">{{ estimation.typeDeBien }}</span></div>
+        <div class="row"><span class="key">Superficie</span><span class="val">{{ estimation.superficie }}</span></div>
+        <div class="row"><span class="key">Encombrement</span><span class="val">{{ estimation.encombrement }}</span></div>
+        <div class="row"><span class="key">Saleté</span><span class="val">{{ estimation.salete }}</span></div>
+        <div class="row"><span class="key">Accessibilité</span><span class="val">{{ estimation.accessibilite }}</span></div>
+        <div class="row"><span class="key">Date</span><span class="val">{{ estimation.createdAt|date('d/m/Y à H:i') }}</span></div>
+    </div>
+
+    {% if estimation.options.nettoyage or estimation.options.desinfection or estimation.options.demontage %}
+    <div class="card">
+        <h3>Options</h3>
+        {% if estimation.options.nettoyage %}
+        <div class="row"><span class="key">Nettoyage</span><span class="val">+150 €</span></div>
+        {% endif %}
+        {% if estimation.options.desinfection %}
+        <div class="row"><span class="key">Désinfection</span><span class="val">+200 €</span></div>
+        {% endif %}
+        {% if estimation.options.demontage %}
+        <div class="row"><span class="key">Démontage</span><span class="val">+100 €</span></div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if estimation.commentaire %}
+    <div class="card">
+        <h3>Commentaire</h3>
+        <p style="margin:0;">{{ estimation.commentaire }}</p>
+    </div>
+    {% endif %}
+
+    {% if estimation.photos is not empty %}
+    <div class="card">
+        <h3>Photos ({{ estimation.photos|length }})</h3>
+        <div class="photos-grid">
+            {% for photo in estimation.photos %}
+            <a href="/uploads/estimations/{{ photo }}" target="_blank">
+                <img src="/uploads/estimations/{{ photo }}" alt="Photo" loading="lazy">
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

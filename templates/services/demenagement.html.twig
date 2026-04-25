@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras déménagement Vitré — Encombrants évacués rapidement | ClearWay{% endblock %}
+{% block meta_description %}Débarras avant ou après déménagement à Vitré. Évacuation rapide de vos encombrants, meubles et objets inutiles. Estimation gratuite.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras déménagement Vitré",
+    "description": "Évacuation de vos encombrants avant, pendant ou après un déménagement à Vitré et en Ille-et-Vilaine.",
+    "url": "{{ url('services_detail', {slug: 'demenagement'}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33XXXXXXXXX",
+        "email": "contact@clearway.fr"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "Vitré"
+    },
+    "serviceType": "Débarras déménagement"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Pouvez-vous intervenir le jour du déménagement ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, nous pouvons intervenir le jour même de votre déménagement pour évacuer tout ce que vous ne souhaitez pas emporter. Nous nous coordonnons avec votre déménageur si besoin."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que faites-vous des meubles et objets en bon état ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les meubles et objets en bon état sont donnés à des associations locales (Emmaüs, Secours Populaire). Nous privilégions le réemploi et le recyclage plutôt que la mise en décharge."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Combien de temps dure l'intervention ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pour un déménagement standard (quelques meubles et cartons à évacuer), comptez 2 à 4 heures. Pour un logement entier, une demi-journée à une journée complète selon le volume."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Faut-il que je trie avant votre passage ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Non, ce n'est pas nécessaire. Nous pouvons trier sur place. Mais si vous avez déjà séparé ce que vous gardez de ce que vous jetez, l'intervention sera plus rapide et donc moins coûteuse."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ url('services') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Débarras déménagement"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{% include 'services/_landing-styles.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="lp-hero">
+    <div class="container">
+        <div class="lp-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('services') }}">Services</a> / Débarras déménagement
+        </div>
+        <h1>Débarras avant ou après<br>déménagement à <span>Vitré</span></h1>
+        <p class="intro">
+            Vous déménagez et il reste des meubles, des cartons, des encombrants dont vous ne voulez plus ?
+            On évacue tout ce que vous ne prenez pas, le jour même si besoin.
+            Vous partez l'esprit léger, le logement est rendu propre.
+        </p>
+        <a href="{{ path('estimation_formulaire') }}" class="btn-hero">Estimer mon débarras →</a>
+    </div>
+</section>
+
+<div class="lp-content">
+    <div class="lp-editorial">
+        <h2>Déménager sans s'encombrer des encombrants</h2>
+        <p>
+            Un déménagement, c'est déjà assez de stress comme ça. Entre les cartons, les changements d'adresse, les contrats à transférer et la logistique du jour J, la dernière chose dont vous avez besoin c'est de gérer <strong>les meubles et objets que vous ne prenez pas</strong>.
+        </p>
+        <p>
+            Pourtant, c'est une situation très courante : le vieux canapé du salon, l'armoire trop grande pour le nouvel appartement, le matelas du lit d'ami, les cartons du garage qu'on n'a pas ouverts depuis trois déménagements. La déchetterie n'accepte pas tout, et faire 10 allers-retours avec une remorque n'est pas exactement la journée idéale.
+        </p>
+        <div class="lp-highlight">
+            <p><strong>On s'en charge à votre place.</strong> Avant, pendant ou après votre déménagement, notre équipe évacue tout ce que vous ne conservez pas. Vous n'avez qu'à nous montrer ce qui part — on gère le reste.</p>
+        </div>
+        <p>
+            À <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Vitré</a> et dans les communes environnantes (Châteaubourg, Cesson-Sévigné, Janzé), nous intervenons régulièrement pour des particuliers qui vendent leur maison, des locataires en fin de bail, ou des propriétaires qui préparent un bien pour la location.
+            L'avantage : le logement est rendu <strong>propre et vide</strong>, sans effort de votre part.
+        </p>
+        <p>
+            Nous ne jetons pas tout à la décharge. Les meubles et objets en bon état sont <strong>donnés à des associations locales</strong> (Emmaüs, Secours Populaire, ressourceries du coin).
+            Les matériaux recyclables — bois, métaux, carton — sont triés et envoyés en filière. C'est plus rapide pour vous, et meilleur pour l'environnement.
+        </p>
+    </div>
+
+    <div class="lp-why">
+        <h2>Pourquoi nous confier vos encombrants ?</h2>
+        <div class="lp-why-grid">
+            <div class="lp-why-card">
+                <span class="icon">⚡</span>
+                <h3>Rapide et efficace</h3>
+                <p>Intervention en quelques heures. Pas de multiples allers-retours à la déchetterie. On s'en occupe, vous déménagez.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">📅</span>
+                <h3>Flexible sur les dates</h3>
+                <p>Avant, pendant ou après le déménagement. On s'adapte à votre planning et à celui de votre déménageur.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">♻️</span>
+                <h3>Recyclage responsable</h3>
+                <p>Meubles donnés aux associations, matériaux triés et recyclés. Rien ne part à la décharge si ça peut être valorisé.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🧹</span>
+                <h3>Logement rendu propre</h3>
+                <p>Nettoyage inclus après évacuation. Idéal pour rendre un logement en bon état au propriétaire ou à l'agence.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lp-checklist">
+        <h2>Ce que comprend notre intervention</h2>
+        <ul>
+            <li>Évacuation de tous les meubles et encombrants non conservés</li>
+            <li>Démontage des meubles volumineux (armoires, lits, étagères)</li>
+            <li>Évacuation de l'électroménager usagé</li>
+            <li>Tri et recyclage des matériaux</li>
+            <li>Don aux associations des objets en bon état</li>
+            <li>Nettoyage du logement après vidage</li>
+            <li>Intervention possible le jour du déménagement</li>
+        </ul>
+    </div>
+
+    <div class="lp-faq">
+        <h2>Questions fréquentes — Débarras déménagement</h2>
+        <details>
+            <summary>Pouvez-vous intervenir le jour du déménagement ?</summary>
+            <div class="faq-answer">
+                Oui, nous pouvons intervenir le jour même de votre déménagement pour évacuer tout ce que vous ne souhaitez pas emporter. Nous nous coordonnons avec votre déménageur si besoin.
+            </div>
+        </details>
+        <details>
+            <summary>Que faites-vous des meubles et objets en bon état ?</summary>
+            <div class="faq-answer">
+                Les meubles et objets en bon état sont donnés à des associations locales (Emmaüs, Secours Populaire). Nous privilégions le réemploi et le recyclage plutôt que la mise en décharge.
+            </div>
+        </details>
+        <details>
+            <summary>Combien de temps dure l'intervention ?</summary>
+            <div class="faq-answer">
+                Pour un déménagement standard (quelques meubles et cartons à évacuer), comptez 2 à 4 heures. Pour un logement entier, une demi-journée à une journée complète selon le volume.
+            </div>
+        </details>
+        <details>
+            <summary>Faut-il que je trie avant votre passage ?</summary>
+            <div class="faq-answer">
+                Non, ce n'est pas nécessaire. Nous pouvons trier sur place. Mais si vous avez déjà séparé ce que vous gardez de ce que vous jetez, l'intervention sera plus rapide et donc moins coûteuse.
+            </div>
+        </details>
+    </div>
+
+    <div class="lp-testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">On vendait notre maison et il restait un garage plein et des meubles dans trois pièces. L'équipe a tout évacué le lendemain du déménagement. Le logement a été rendu propre et vide, l'acheteur était ravi.</div>
+        <div class="author">
+            <span class="avatar">PG</span> Philippe G., Châteaubourg
+        </div>
+    </div>
+
+    <div class="lp-cta">
+        <h2>Vous déménagez bientôt ?</h2>
+        <p>Estimez le coût d'évacuation de vos encombrants en 2 minutes.</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras gratuitement →</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="lp-autres">
+        <h2>Nos autres services de débarras</h2>
+        <div class="lp-autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="lp-autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

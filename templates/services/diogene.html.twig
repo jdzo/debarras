@@ -1,0 +1,221 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras Diogène Vitré — Intervention discrète et spécialisée | ClearWay{% endblock %}
+{% block meta_description %}Débarras syndrome de Diogène à Vitré. Intervention discrète, équipe formée, désinfection complète. Devis gratuit, sans jugement.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras Diogène Vitré",
+    "description": "Intervention spécialisée pour les logements touchés par le syndrome de Diogène à Vitré et en Ille-et-Vilaine.",
+    "url": "{{ url('services_detail', {slug: 'diogene'}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33XXXXXXXXX",
+        "email": "contact@clearway.fr"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "Vitré"
+    },
+    "serviceType": "Débarras Diogène"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Qu'est-ce que le syndrome de Diogène ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le syndrome de Diogène est un trouble du comportement caractérisé par une accumulation compulsive d'objets et de déchets, associée à un manque d'hygiène du logement. Il touche principalement les personnes âgées isolées. Une intervention professionnelle est nécessaire pour remettre le logement en état."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "L'intervention est-elle discrète ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, la discrétion est notre priorité. Nous intervenons avec des véhicules banalisés, en horaires adaptés, et nous protégeons les parties communes. Le voisinage n'est pas informé de la nature de l'intervention."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Combien coûte un débarras Diogène ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le coût dépend du volume, du niveau d'insalubrité et de la superficie du logement. Comptez entre 1 500 et 5 000 € pour un appartement. Nous établissons un devis précis après visite gratuite."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Travaillez-vous avec les services sociaux ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, nous pouvons nous coordonner avec les services sociaux, les tuteurs, les CCAS ou les bailleurs sociaux. Nous avons l'habitude de ces situations et savons travailler en équipe avec les différents intervenants."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ url('services') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Débarras Diogène"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{% include 'services/_landing-styles.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="lp-hero">
+    <div class="container">
+        <div class="lp-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('services') }}">Services</a> / Débarras Diogène
+        </div>
+        <h1>Syndrome de Diogène :<br>intervention professionnelle à <span>Vitré</span></h1>
+        <p class="intro">
+            Vous faites face à un logement envahi par l'accumulation ? Vous n'êtes pas seul, et il n'y a aucun jugement à porter.
+            Notre équipe formée intervient avec discrétion et bienveillance pour remettre le logement en état, à Vitré et en Ille-et-Vilaine.
+        </p>
+        <a href="{{ path('estimation_formulaire') }}" class="btn-hero">Demander un devis gratuit →</a>
+    </div>
+</section>
+
+<div class="lp-content">
+    <div class="lp-editorial">
+        <h2>Le syndrome de Diogène : comprendre pour mieux agir</h2>
+        <p>
+            Le syndrome de Diogène se manifeste par une <strong>accumulation compulsive d'objets et de déchets</strong> dans le logement, souvent associée à un repli social et un manque d'hygiène.
+            Ce n'est pas de la négligence ou de la paresse — c'est un trouble du comportement reconnu, qui touche principalement les personnes âgées isolées, mais pas uniquement.
+        </p>
+        <p>
+            À <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Vitré</a> et dans les communes rurales d'Ille-et-Vilaine, ces situations sont plus fréquentes qu'on ne le pense.
+            L'isolement géographique, la perte d'un conjoint, l'éloignement de la famille : autant de facteurs qui peuvent conduire à une dégradation progressive du logement.
+            Quand la famille, le voisinage ou les services sociaux découvrent la situation, le logement est souvent dans un état qui rend impossible une intervention classique.
+        </p>
+        <div class="lp-highlight">
+            <p><strong>Aucun jugement, aucune remarque.</strong> Notre équipe est formée spécifiquement à ces situations. Nous intervenons avec respect, discrétion et les équipements de protection nécessaires pour la sécurité de tous.</p>
+        </div>
+        <p>
+            Un débarras Diogène n'est pas un simple vidage : il implique une <strong>désinfection en profondeur</strong>, un traitement des nuisibles (cafards, rats, punaises) si nécessaire, et un nettoyage de toutes les surfaces — sols, murs, plafonds.
+            Selon la gravité, l'intervention peut prendre de un à trois jours.
+            Nous utilisons des produits professionnels et des équipements de protection individuelle (masques FFP2, combinaisons, gants) pour travailler en sécurité.
+        </p>
+        <p>
+            Nous pouvons intervenir à la demande de la famille, mais aussi à celle d'un <strong>tuteur, du CCAS, d'un bailleur social ou d'un syndic</strong>.
+            Dans ces cas, nous nous coordonnons directement avec l'interlocuteur responsable pour assurer une prise en charge fluide et respectueuse de la personne concernée.
+        </p>
+    </div>
+
+    <div class="lp-why">
+        <h2>Pourquoi une intervention spécialisée ?</h2>
+        <div class="lp-why-grid">
+            <div class="lp-why-card">
+                <span class="icon">🛡️</span>
+                <h3>Sécurité sanitaire</h3>
+                <p>Équipement de protection, traitement anti-nuisibles, désinfection. Votre santé et celle des occupants sont notre priorité.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🤫</span>
+                <h3>Discrétion totale</h3>
+                <p>Véhicules banalisés, horaires adaptés, protection des parties communes. Le voisinage ne saura rien.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🧠</span>
+                <h3>Équipe formée</h3>
+                <p>Nos intervenants sont sensibilisés au syndrome de Diogène. Pas de jugement, pas de remarque. Juste du professionnalisme.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🏥</span>
+                <h3>Coordination sociale</h3>
+                <p>Nous travaillons avec les services sociaux, tuteurs et bailleurs pour une prise en charge globale de la situation.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lp-checklist">
+        <h2>Ce que comprend notre intervention</h2>
+        <ul>
+            <li>Visite préalable gratuite pour évaluer la situation</li>
+            <li>Évacuation de tous les encombrants et déchets accumulés</li>
+            <li>Tri des objets personnels et documents importants</li>
+            <li>Nettoyage approfondi de toutes les surfaces</li>
+            <li>Désinfection complète du logement</li>
+            <li>Traitement anti-nuisibles si nécessaire</li>
+            <li>Remise en état pour habitation ou relocation</li>
+            <li>Coordination avec les services sociaux ou tuteurs</li>
+        </ul>
+    </div>
+
+    <div class="lp-faq">
+        <h2>Questions fréquentes — Débarras Diogène</h2>
+        <details>
+            <summary>Qu'est-ce que le syndrome de Diogène ?</summary>
+            <div class="faq-answer">
+                Le syndrome de Diogène est un trouble du comportement caractérisé par une accumulation compulsive d'objets et de déchets, associée à un manque d'hygiène du logement. Il touche principalement les personnes âgées isolées. Une intervention professionnelle est nécessaire pour remettre le logement en état de manière sécurisée.
+            </div>
+        </details>
+        <details>
+            <summary>L'intervention est-elle discrète ?</summary>
+            <div class="faq-answer">
+                Oui, la discrétion est notre priorité. Nous intervenons avec des véhicules banalisés, en horaires adaptés, et nous protégeons les parties communes. Le voisinage n'est pas informé de la nature de l'intervention.
+            </div>
+        </details>
+        <details>
+            <summary>Combien coûte un débarras Diogène ?</summary>
+            <div class="faq-answer">
+                Le coût dépend du volume, du niveau d'insalubrité et de la superficie du logement. Comptez entre 1 500 et 5 000 € pour un appartement standard. Nous établissons un devis précis après une visite gratuite et sans engagement.
+            </div>
+        </details>
+        <details>
+            <summary>Travaillez-vous avec les services sociaux ?</summary>
+            <div class="faq-answer">
+                Oui, nous pouvons nous coordonner avec les services sociaux, les tuteurs, les CCAS ou les bailleurs sociaux. Nous avons l'habitude de ces situations et savons travailler en équipe avec les différents intervenants.
+            </div>
+        </details>
+    </div>
+
+    <div class="lp-testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">Mon père vivait dans un appartement devenu insalubre depuis des années. J'avais honte et je ne savais pas à qui m'adresser. L'équipe est intervenue sans aucun jugement, avec beaucoup de professionnalisme. L'appartement a été rendu impeccable en deux jours.</div>
+        <div class="author">
+            <span class="avatar">SM</span> Sylvie M., Fougères
+        </div>
+    </div>
+
+    <div class="lp-cta">
+        <h2>Besoin d'aide face au syndrome de Diogène ?</h2>
+        <p>Premier contact gratuit et confidentiel. On évalue la situation ensemble.</p>
+        <a href="{{ path('estimation_formulaire') }}">Demander un devis gratuit →</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="lp-autres">
+        <h2>Nos autres services de débarras</h2>
+        <div class="lp-autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="lp-autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

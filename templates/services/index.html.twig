@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Services de débarras à Vitré et Ille-et-Vilaine — Succession, Diogène, déménagement | ClearWay{% endblock %}
+{% block meta_description %}Tous nos services de débarras à Vitré : succession, Diogène, déménagement, cave, logement insalubre. Estimation gratuite, intervention sous 48h.{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .page-header {
+        text-align: center;
+        padding: 48px 0 32px;
+    }
+    .page-header h1 { font-size: 32px; margin: 0 0 8px; }
+    .page-header p { color: var(--muted); font-size: 17px; margin: 0; }
+
+    .services-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding-bottom: 48px;
+    }
+    .service-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 32px 24px;
+        text-decoration: none;
+        color: inherit;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .service-card:hover {
+        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+    }
+    .service-card .icon { font-size: 40px; margin-bottom: 12px; display: block; }
+    .service-card h2 { margin: 0 0 10px; font-size: 20px; }
+    .service-card p { margin: 0 0 16px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .service-card .link {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="page-header">
+        <h1>Nos services de débarras</h1>
+        <p>Des solutions professionnelles adaptées à chaque situation</p>
+    </div>
+
+    <div class="services-list">
+        {% for slug, service in services %}
+        <a href="{{ path('services_detail', {slug: slug}) }}" class="service-card">
+            <span class="icon">{{ service.icon }}</span>
+            <h2>{{ service.titre }}</h2>
+            <p>{{ service.description }}</p>
+            <span class="link">En savoir plus →</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

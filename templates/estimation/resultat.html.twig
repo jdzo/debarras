@@ -1,0 +1,244 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre estimation de débarras — Résultat | ClearWay{% endblock %}
+{% block meta_description %}Résultat de votre estimation de débarras. Prix indicatif basé sur le volume, la superficie et le type de bien. Demandez un devis précis gratuit.{% endblock %}
+
+{% block sticky_cta %}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .result-wrap {
+        max-width: 640px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+    .result-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+    .result-header .check {
+        width: 64px; height: 64px;
+        background: #eff6ff;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin-bottom: 16px;
+    }
+    .result-header h1 {
+        font-size: 24px;
+        margin: 0 0 8px;
+    }
+    .price-card {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        border-radius: var(--radius);
+        padding: 32px;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    .price-card .label {
+        color: var(--accent-dark);
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+    }
+    .price-card .range {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--accent-dark);
+    }
+    .price-card .note {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+    .details-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 16px;
+    }
+    .details-card h3 {
+        margin: 0 0 16px;
+        font-size: 16px;
+        color: #374151;
+    }
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 14px;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row .key { color: var(--muted); }
+    .detail-row .val { font-weight: 600; }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-success { background: #dcfce7; color: #16a34a; }
+    .badge-warning { background: #fef9c3; color: #a16207; }
+    .badge-primary { background: #e0e7ff; color: #4338ca; }
+    .badge-danger { background: #fee2e2; color: #dc2626; }
+    .badge-secondary { background: #f1f5f9; color: #475569; }
+
+    .cta-section {
+        text-align: center;
+        margin-top: 32px;
+        padding: 24px;
+        background: var(--card);
+        border-radius: var(--radius);
+    }
+    .cta-section p {
+        color: var(--muted);
+        margin: 0 0 16px;
+    }
+    .cta-section .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 16px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+    }
+    .cta-section .btn-primary {
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+    .cta-section .btn-secondary {
+        background: white;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        margin-left: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="result-wrap">
+    <div class="result-header">
+        <div class="check">✅</div>
+        <h1>Votre estimation est prête !</h1>
+        <p style="color:var(--muted);">Merci {{ estimation.coordonnees.nom }}, voici le détail de votre estimation.</p>
+    </div>
+
+    <div class="price-card">
+        <div class="label">Estimation de votre débarras</div>
+        <div class="range">A partir de {{ estimation.prixMin }} €</div>
+        <div class="note">Pour un devis précis, un conseiller vous rappelle gratuitement</div>
+    </div>
+
+    <div class="details-card">
+        <h3>Récapitulatif</h3>
+        <div class="detail-row">
+            <span class="key">Type de bien</span>
+            <span class="val">{{ estimation.typeDeBien }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Superficie</span>
+            <span class="val">{{ estimation.superficie }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Encombrement</span>
+            <span class="val">{{ estimation.encombrement }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Niveau de saleté</span>
+            <span class="val">{{ estimation.salete }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Accessibilité</span>
+            <span class="val">{{ estimation.accessibilite }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Statut</span>
+            <span class="val"><span class="badge badge-{{ estimation.statutCouleur }}">{{ estimation.statut }}</span></span>
+        </div>
+    </div>
+
+    {% if estimation.options.nettoyage or estimation.options.desinfection or estimation.options.demontage %}
+    <div class="details-card">
+        <h3>Options sélectionnées</h3>
+        {% if estimation.options.nettoyage %}
+        <div class="detail-row">
+            <span class="key">Nettoyage après débarras</span>
+            <span class="val">+150 €</span>
+        </div>
+        {% endif %}
+        {% if estimation.options.desinfection %}
+        <div class="detail-row">
+            <span class="key">Désinfection</span>
+            <span class="val">+200 €</span>
+        </div>
+        {% endif %}
+        {% if estimation.options.demontage %}
+        <div class="detail-row">
+            <span class="key">Démontage de meubles</span>
+            <span class="val">+100 €</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="details-card">
+        <h3>Vos coordonnées</h3>
+        <div class="detail-row">
+            <span class="key">Nom</span>
+            <span class="val">{{ estimation.coordonnees.nom }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Téléphone</span>
+            <span class="val">{{ estimation.coordonnees.telephone }}</span>
+        </div>
+        <div class="detail-row">
+            <span class="key">Email</span>
+            <span class="val">{{ estimation.coordonnees.email }}</span>
+        </div>
+        {% if estimation.coordonnees.adresse %}
+        <div class="detail-row">
+            <span class="key">Adresse</span>
+            <span class="val">{{ estimation.coordonnees.adresse }}{% if estimation.coordonnees.code_postal %}, {{ estimation.coordonnees.code_postal }}{% endif %}{% if estimation.coordonnees.ville %} {{ estimation.coordonnees.ville }}{% endif %}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if estimation.commentaire %}
+    <div class="details-card">
+        <h3>Commentaire</h3>
+        <p style="margin:0;color:#374151;">{{ estimation.commentaire }}</p>
+    </div>
+    {% endif %}
+
+    {% if estimation.photos is not empty %}
+    <div class="details-card">
+        <h3>Photos jointes</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:8px;">
+            {% for photo in estimation.photos %}
+            <img src="/uploads/estimations/{{ photo }}" alt="Photo du bien" loading="lazy"
+                 style="width:100%;border-radius:8px;object-fit:cover;aspect-ratio:1;">
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="cta-section">
+        <p>Un conseiller vous contactera dans les plus brefs délais pour affiner cette estimation.</p>
+        <a href="tel:+33123456789" class="btn btn-primary">Appeler maintenant</a>
+        <a href="{{ path('contact') }}" class="btn btn-secondary">Nous contacter</a>
+        <a href="{{ path('estimation_formulaire') }}" class="btn btn-secondary">Nouvelle estimation</a>
+    </div>
+</div>
+{% endblock %}

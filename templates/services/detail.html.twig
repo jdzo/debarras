@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ service.titre }} - ClearWay Débarras{% endblock %}
+{% block meta_description %}{{ service.description|slice(0, 155) }}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .detail-wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 48px 20px;
+    }
+    .breadcrumb {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 24px;
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .detail-header {
+        margin-bottom: 32px;
+    }
+    .detail-header .icon { font-size: 48px; margin-bottom: 12px; display: block; }
+    .detail-header h1 { font-size: 32px; margin: 0 0 12px; }
+    .detail-header p {
+        font-size: 17px;
+        color: #374151;
+        line-height: 1.7;
+    }
+
+    .checklist {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 28px 24px;
+        margin-bottom: 32px;
+    }
+    .checklist h2 { font-size: 18px; margin: 0 0 16px; }
+    .checklist ul { list-style: none; padding: 0; margin: 0; }
+    .checklist li {
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+        content: '✓';
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .cta-box {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border-radius: var(--radius);
+        padding: 32px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .cta-box h3 { margin: 0 0 8px; font-size: 20px; }
+    .cta-box p { color: var(--muted); margin: 0 0 16px; }
+    .cta-box a {
+        display: inline-block;
+        padding: 14px 32px;
+        background: var(--accent);
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+    }
+
+    .autres-services h3 { font-size: 18px; margin: 0 0 16px; }
+    .autres-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+    }
+    .autre-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 16px;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: box-shadow 0.2s;
+    }
+    .autre-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .autre-card .icon { font-size: 24px; }
+    .autre-card .name { font-weight: 600; font-size: 14px; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="detail-wrap">
+    <div class="breadcrumb">
+        <a href="{{ path('services') }}">Services</a> / {{ service.titre }}
+    </div>
+
+    <div class="detail-header">
+        <span class="icon">{{ service.icon }}</span>
+        <h1>{{ service.titre }}</h1>
+        <p>{{ service.description }}</p>
+    </div>
+
+    <div class="checklist">
+        <h2>Ce que nous proposons</h2>
+        <ul>
+            {% for detail in service.details %}
+            <li>{{ detail }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="cta-box">
+        <h3>Besoin d'un {{ service.titre|lower }} ?</h3>
+        <p>Obtenez une estimation gratuite en 2 minutes</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="autres-services">
+        <h3>Nos autres services</h3>
+        <div class="autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

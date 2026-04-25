@@ -1,0 +1,388 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment faire vider une maison après un décès : guide complet | ClearWay{% endblock %}
+{% block meta_description %}Guide complet pour vider la maison d'un proche décédé : démarches légales, tri des affaires, choix du prestataire, coûts. Conseils pratiques étape par étape.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ article.titre }}",
+    "description": "{{ article.description }}",
+    "datePublished": "{{ article.date }}",
+    "dateModified": "{{ article.date }}",
+    "author": {
+        "@type": "Organization",
+        "name": "ClearWay Débarras"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ClearWay Débarras",
+        "url": "{{ url('accueil') }}"
+    },
+    "mainEntityOfPage": "{{ url('blog_article', {slug: slug}) }}"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Peut-on vider une maison avant la fin de la succession ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, à condition que tous les héritiers soient d'accord. Tant que la succession n'est pas réglée, les biens appartiennent à l'indivision. L'accord de chaque héritier est nécessaire avant de toucher à quoi que ce soit. En cas de désaccord, le notaire peut trancher."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Combien coûte le vidage complet d'une maison après décès ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le prix varie selon le volume, l'accessibilité et la localisation. Pour une maison de 3-4 pièces, comptez entre 800 et 2 500 €. Pour une grande maison avec dépendances (grenier, cave, garage), cela peut aller jusqu'à 4 000-5 000 €. La plupart des entreprises proposent un devis gratuit après visite."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que faire des objets de valeur trouvés dans la maison ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les objets de valeur (bijoux, tableaux, meubles anciens, collections) doivent être inventoriés et partagés entre les héritiers selon les règles de la succession. Un commissaire-priseur peut estimer les pièces de valeur. Les entreprises de débarras sérieuses mettent systématiquement de côté tout objet potentiellement précieux."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "{{ url('blog') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Vider une maison après un décès"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .article-hero {
+        padding: 48px 0 32px;
+        border-bottom: 1px solid rgba(234, 88, 12, 0.08);
+        background: linear-gradient(135deg, rgba(234, 88, 12, 0.03) 0%, rgba(234, 88, 12, 0.01) 100%);
+    }
+    .article-hero .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    .article-breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .article-breadcrumb a { color: var(--accent); text-decoration: none; }
+    .article-hero h1 {
+        font-size: 34px; font-weight: 900; letter-spacing: -1px;
+        margin: 0 0 16px; line-height: 1.2;
+    }
+    .article-meta {
+        font-size: 14px; color: var(--muted);
+        display: flex; gap: 16px; margin-bottom: 0;
+    }
+
+    .article-body {
+        max-width: 760px; margin: 0 auto; padding: 40px 24px 48px;
+    }
+    .article-body h2 {
+        font-size: 24px; font-weight: 800; margin: 40px 0 16px;
+        letter-spacing: -0.5px; line-height: 1.2;
+    }
+    .article-body h3 {
+        font-size: 19px; font-weight: 700; margin: 28px 0 12px;
+    }
+    .article-body p {
+        font-size: 16px; color: #374151; line-height: 1.85; margin: 0 0 16px;
+    }
+    .article-body ul, .article-body ol {
+        margin: 0 0 16px; padding-left: 24px;
+    }
+    .article-body li {
+        font-size: 16px; color: #374151; line-height: 1.85;
+        margin-bottom: 6px;
+    }
+    .article-body strong { color: var(--text); }
+
+    .article-highlight {
+        background: var(--card); border-left: 3px solid var(--accent);
+        padding: 20px 24px; border-radius: 0 var(--radius) var(--radius) 0;
+        margin: 24px 0;
+    }
+    .article-highlight p { margin: 0; font-size: 15px; }
+
+    .article-cta {
+        background: var(--text); color: #fff; text-align: center;
+        padding: 40px 24px; border-radius: 16px; margin: 40px 0;
+        position: relative; overflow: hidden;
+    }
+    .article-cta::before {
+        content: ''; position: absolute; top: -40%; right: -10%;
+        width: 200px; height: 200px; border-radius: 50%;
+        background: rgba(249, 115, 22, 0.08);
+    }
+    .article-cta h2 { font-size: 24px; font-weight: 900; margin: 0 0 8px; position: relative; color: #fff; }
+    .article-cta p { color: #a1a1aa; margin: 0 0 20px; font-size: 16px; position: relative; }
+    .article-cta a {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 14px 28px; background: var(--accent); color: #fff;
+        border-radius: var(--radius-full); text-decoration: none;
+        font-weight: 700; font-size: 15px; position: relative;
+    }
+
+    .article-faq { margin: 40px 0; }
+    .article-faq h2 { font-size: 24px; font-weight: 800; margin: 0 0 16px; letter-spacing: -0.5px; }
+    .article-faq details {
+        background: var(--card); border: 1px solid #e4e4e7;
+        border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
+    }
+    .article-faq summary {
+        padding: 16px 20px; font-weight: 600; font-size: 15px;
+        cursor: pointer; list-style: none;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .article-faq summary::-webkit-details-marker { display: none; }
+    .article-faq summary::after { content: '+'; font-size: 20px; color: var(--accent); font-weight: 700; }
+    .article-faq details[open] summary::after { content: '−'; }
+    .article-faq .faq-answer { padding: 0 20px 16px; font-size: 15px; color: #374151; line-height: 1.7; }
+
+    .article-autres { margin-top: 40px; }
+    .article-autres h2 { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+    .article-autres-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .article-autre-card {
+        background: var(--card); border: 1px solid #e4e4e7;
+        border-radius: var(--radius); padding: 20px;
+        text-decoration: none; color: inherit; transition: border-color 0.2s;
+    }
+    .article-autre-card:hover { border-color: var(--accent); }
+    .article-autre-card h3 { font-size: 16px; font-weight: 600; margin: 0 0 4px; }
+    .article-autre-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    @media (max-width: 768px) {
+        .article-hero h1 { font-size: 26px; }
+        .article-body h2 { font-size: 21px; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="article-hero">
+    <div class="container">
+        <div class="article-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('blog') }}">Blog</a> / Vider une maison après un décès
+        </div>
+        <h1>{{ article.titre }}</h1>
+        <div class="article-meta">
+            <span>Publié le {{ article.date|date('d/m/Y') }}</span>
+            <span>{{ article.temps_lecture }} de lecture</span>
+        </div>
+    </div>
+</section>
+
+<div class="article-body">
+    <p>
+        La perte d'un proche est un moment de bouleversement. Au milieu du deuil et des démarches administratives, il faut aussi se poser une question très concrète : <strong>que faire de la maison et de tout ce qu'elle contient ?</strong>
+    </p>
+    <p>
+        Ce guide vous accompagne étape par étape, du cadre légal à l'intervention concrète, pour que le vidage du logement se passe dans les meilleures conditions possibles — humainement et pratiquement.
+    </p>
+
+    <h2>1. Avant de toucher à quoi que ce soit : le cadre légal</h2>
+
+    <p>
+        Quand une personne décède, ses biens ne vous appartiennent pas automatiquement, même si vous êtes l'unique héritier. La maison et son contenu font partie de la <strong>succession</strong>, gérée par le notaire.
+    </p>
+
+    <h3>L'accord des héritiers est indispensable</h3>
+    <p>
+        Tant que la succession n'est pas réglée, les biens sont en <strong>indivision</strong> : ils appartiennent à l'ensemble des héritiers. Vous ne pouvez pas décider seul de vider la maison ou de jeter des affaires. L'accord de tous les héritiers est requis, idéalement par écrit.
+    </p>
+
+    <div class="article-highlight">
+        <p><strong>Point important :</strong> si un héritier vide la maison sans l'accord des autres, cela peut être considéré comme un recel successoral — un délit passible de sanctions civiles. Même avec les meilleures intentions, protégez-vous en obtenant l'accord écrit de chacun.</p>
+    </div>
+
+    <h3>Le rôle du notaire</h3>
+    <p>
+        Le notaire est votre interlocuteur principal. C'est lui qui :
+    </p>
+    <ul>
+        <li>Établit l'acte de notoriété (la liste officielle des héritiers)</li>
+        <li>Fait l'inventaire des biens si nécessaire (obligatoire au-delà de 5 000 €)</li>
+        <li>Donne le feu vert pour vider le logement</li>
+        <li>Gère le partage des biens entre héritiers</li>
+    </ul>
+    <p>
+        <strong>En pratique</strong>, la plupart des notaires autorisent le vidage du logement assez rapidement, à condition que tous les héritiers soient d'accord et qu'un inventaire ait été fait pour les objets de valeur.
+    </p>
+
+    <h2>2. Faire l'inventaire avant le vidage</h2>
+
+    <p>
+        Avant de vider quoi que ce soit, prenez le temps de faire un tour complet du logement pour repérer :
+    </p>
+    <ul>
+        <li><strong>Les documents importants</strong> : contrats d'assurance, relevés bancaires, testaments, livrets de famille, actes notariés, titres de propriété</li>
+        <li><strong>Les objets de valeur</strong> : bijoux, montres, tableaux, argenterie, collections (timbres, pièces, figurines), meubles anciens</li>
+        <li><strong>Les souvenirs de famille</strong> : photos, albums, correspondances, objets sentimentaux</li>
+        <li><strong>Les objets à donner</strong> : vêtements en bon état, vaisselle, petit électroménager, livres</li>
+    </ul>
+
+    <div class="article-highlight">
+        <p><strong>Conseil pratique :</strong> faites des photos de chaque pièce avant de commencer le tri. Cela sert de référence en cas de désaccord entre héritiers, et peut être utile pour l'estimation des biens par le notaire.</p>
+    </div>
+
+    <p>
+        Si vous soupçonnez la présence d'objets de grande valeur (mobilier ancien, œuvres d'art, collections), faites appel à un <strong>commissaire-priseur</strong> pour une estimation avant de toucher à quoi que ce soit. Certaines pièces peuvent avoir une valeur insoupçonnée.
+    </p>
+
+    <h2>3. Que faire des affaires ? Les différentes options</h2>
+
+    <h3>Garder : les souvenirs et les objets de valeur</h3>
+    <p>
+        Chaque héritier peut récupérer les objets auxquels il tient. Organisez une visite commune si possible — c'est souvent un moment difficile mais nécessaire. Le reste du contenu est à évacuer.
+    </p>
+
+    <h3>Donner : les objets en bon état</h3>
+    <p>
+        Plutôt que de tout envoyer à la déchetterie, de nombreux objets peuvent avoir une seconde vie :
+    </p>
+    <ul>
+        <li><strong>Emmaüs</strong> : meubles, vaisselle, vêtements, livres, électroménager. Certaines antennes se déplacent pour collecter sur place.</li>
+        <li><strong>Secours Populaire / Croix-Rouge</strong> : vêtements, linge de maison, petit mobilier</li>
+        <li><strong>Ressourceries locales</strong> : tout ce qui peut être réparé ou revalorisé</li>
+        <li><strong>Bibliothèques / médiathèques</strong> : livres en bon état</li>
+    </ul>
+    <p>
+        En Ille-et-Vilaine, Emmaüs est présent à <a href="{{ path('ville_page', {ville: 'rennes'}) }}">Rennes</a> (route de Lorient) et collecte dans tout le département, y compris sur le <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Pays de Vitré</a>.
+    </p>
+
+    <h3>Vendre : brocante, vide-maison, sites en ligne</h3>
+    <p>
+        Si vous avez le temps, certains objets peuvent se vendre : meubles en bois massif, bibelots anciens, outils, électroménager récent. Les options :
+    </p>
+    <ul>
+        <li><strong>Le Bon Coin / Vinted</strong> : rapide pour les petits objets, mais demande du temps pour les annonces et les rendez-vous</li>
+        <li><strong>Vide-maison sur place</strong> : vous ouvrez la maison un week-end et les gens viennent acheter. Efficace pour évacuer du volume, mais à organiser</li>
+        <li><strong>Brocanteur / antiquaire</strong> : pour les meubles et objets de valeur. Ils se déplacent et font une offre globale</li>
+    </ul>
+
+    <h3>Évacuer : le reste</h3>
+    <p>
+        Après le tri, il reste toujours un volume important d'objets sans valeur marchande ni sentimentale : vieux matelas, meubles abîmés, électroménager hors service, cartons de magazines, vêtements usés. C'est là qu'intervient le <strong>professionnel du débarras</strong>.
+    </p>
+
+    <h2>4. Faire appel à un professionnel du débarras</h2>
+
+    <p>
+        Vider une maison soi-même après un décès, c'est possible. Mais c'est <strong>physiquement épuisant, émotionnellement difficile, et ça prend un temps considérable</strong> — souvent plusieurs week-ends complets, avec des allers-retours à la déchetterie qui n'accepte pas tout.
+    </p>
+    <p>
+        Un professionnel du débarras prend en charge l'intégralité du vidage : tri final, démontage des meubles, évacuation des encombrants, nettoyage du logement. En une journée, le logement est vide et propre.
+    </p>
+
+    <h3>Comment choisir le bon prestataire ?</h3>
+    <ul>
+        <li><strong>Devis gratuit et détaillé</strong> : méfiez-vous des prix au téléphone sans visite. Un professionnel sérieux se déplace pour évaluer le volume</li>
+        <li><strong>Assurance responsabilité civile</strong> : indispensable en cas de dégât dans le logement</li>
+        <li><strong>Engagement sur le tri</strong> : un bon débarrasseur ne met pas tout en décharge. Il trie, recycle et donne aux associations</li>
+        <li><strong>Références locales</strong> : avis Google, recommandation du notaire ou de l'agence immobilière</li>
+    </ul>
+
+    <h3>Quel budget prévoir ?</h3>
+    <p>
+        Le prix d'un <a href="{{ path('services_detail', {slug: 'succession'}) }}">débarras succession</a> dépend de plusieurs facteurs :
+    </p>
+    <ul>
+        <li><strong>Le volume</strong> : une maison de 3 pièces ≠ une longère avec grenier, cave et garage</li>
+        <li><strong>L'accessibilité</strong> : étage sans ascenseur, ruelle étroite, accès difficile</li>
+        <li><strong>Le niveau d'encombrement</strong> : un logement normalement meublé ≠ des décennies d'accumulation</li>
+        <li><strong>La localisation</strong> : les prix varient selon les régions</li>
+    </ul>
+
+    <div class="article-highlight">
+        <p><strong>Ordre de grandeur à Vitré et en Ille-et-Vilaine :</strong> 800 à 2 500 € pour une maison de 3-4 pièces normalement meublée. Jusqu'à 4 000-5 000 € pour une grande propriété avec dépendances encombrées. Un devis gratuit vous donne un prix exact.</p>
+    </div>
+
+    <h2>5. Les étapes concrètes du vidage</h2>
+
+    <p>
+        Voici le déroulement type d'un débarras après succession, que vous le fassiez vous-même ou avec un professionnel :
+    </p>
+
+    <ol>
+        <li><strong>Obtenir l'accord des héritiers</strong> — par écrit si possible</li>
+        <li><strong>Faire l'inventaire</strong> — photos, repérage des objets de valeur et documents</li>
+        <li><strong>Récupérer les affaires personnelles</strong> — chaque héritier prend ce qu'il souhaite garder</li>
+        <li><strong>Organiser les dons</strong> — contacter Emmaüs ou les associations locales</li>
+        <li><strong>Vendre ce qui peut l'être</strong> — brocanteur, vide-maison, Le Bon Coin (si vous avez le temps)</li>
+        <li><strong>Faire intervenir le débarrasseur</strong> — pour tout le reste</li>
+        <li><strong>Nettoyage final</strong> — le logement est rendu propre, prêt pour la vente ou la relocation</li>
+    </ol>
+
+    <h2>6. Cas particuliers</h2>
+
+    <h3>La maison est très encombrée (type Diogène)</h3>
+    <p>
+        Si le logement est dans un état d'accumulation avancée, un <a href="{{ path('services_detail', {slug: 'diogene'}) }}">débarras spécialisé Diogène</a> est nécessaire. Les équipes sont formées pour intervenir en sécurité (équipements de protection, désinfection, traitement anti-nuisibles). Ne tentez pas de gérer ça seul.
+    </p>
+
+    <h3>Le bail arrive à échéance</h3>
+    <p>
+        Si le défunt était locataire, le bail se poursuit pendant un délai variable selon la situation (6 mois à 1 an). Mais les loyers continuent de courir — chaque mois de retard coûte de l'argent à la succession. Mieux vaut agir vite pour libérer le logement.
+    </p>
+
+    <h3>La maison est à vendre</h3>
+    <p>
+        Un logement vide se vend mieux et plus vite qu'un logement encombré. Les acheteurs ont du mal à se projeter dans un bien rempli d'affaires. Le vidage + nettoyage est un investissement qui se récupère souvent sur le prix de vente.
+    </p>
+
+    <div class="article-cta">
+        <h2>Besoin de vider une maison après succession ?</h2>
+        <p>Estimation gratuite en 2 minutes, intervention sous 48h à Vitré et en Ille-et-Vilaine.</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras gratuitement →</a>
+    </div>
+
+    <div class="article-faq">
+        <h2>Questions fréquentes</h2>
+        <details>
+            <summary>Peut-on vider une maison avant la fin de la succession ?</summary>
+            <div class="faq-answer">
+                Oui, à condition que tous les héritiers soient d'accord. Tant que la succession n'est pas réglée, les biens appartiennent à l'indivision. L'accord de chaque héritier est nécessaire avant de toucher à quoi que ce soit. En cas de désaccord, le notaire peut trancher.
+            </div>
+        </details>
+        <details>
+            <summary>Combien coûte le vidage complet d'une maison après décès ?</summary>
+            <div class="faq-answer">
+                Le prix varie selon le volume, l'accessibilité et la localisation. Pour une maison de 3-4 pièces, comptez entre 800 et 2 500 €. Pour une grande maison avec dépendances (grenier, cave, garage), cela peut aller jusqu'à 4 000-5 000 €. La plupart des entreprises proposent un devis gratuit après visite.
+            </div>
+        </details>
+        <details>
+            <summary>Que faire des objets de valeur trouvés dans la maison ?</summary>
+            <div class="faq-answer">
+                Les objets de valeur (bijoux, tableaux, meubles anciens, collections) doivent être inventoriés et partagés entre les héritiers selon les règles de la succession. Un commissaire-priseur peut estimer les pièces de valeur. Les entreprises de débarras sérieuses mettent systématiquement de côté tout objet potentiellement précieux.
+            </div>
+        </details>
+    </div>
+
+    {% if autres_articles is not empty %}
+    <div class="article-autres">
+        <h2>À lire aussi</h2>
+        <div class="article-autres-grid">
+            {% for autreSlug, autre in autres_articles %}
+            <a href="{{ path('blog_article', {slug: autreSlug}) }}" class="article-autre-card">
+                <h3>{{ autre.titre }}</h3>
+                <p>{{ autre.temps_lecture }} de lecture</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

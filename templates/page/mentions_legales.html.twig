@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales — ClearWay{% endblock %}
+{% block meta_description %}Mentions légales du site ClearWay, société de débarras à Vitré et en Ille-et-Vilaine.{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .legal-wrap {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 48px 20px;
+    }
+    .legal-wrap h1 {
+        font-size: 32px;
+        margin: 0 0 32px;
+        text-align: center;
+    }
+    .legal-wrap h2 {
+        font-size: 20px;
+        margin: 32px 0 12px;
+        color: var(--accent);
+    }
+    .legal-wrap p,
+    .legal-wrap ul {
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0 0 12px;
+    }
+    .legal-wrap ul {
+        padding-left: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="legal-wrap">
+    <h1>Mentions légales</h1>
+
+    <h2>Éditeur du site</h2>
+    <p>
+        <strong>ClearWay</strong> — nom commercial<br>
+        Micro-entreprise (auto-entrepreneur)<br>
+        [Prénom Nom]<br>
+        [Adresse complète]<br>
+        SIRET : [numéro SIRET]<br>
+        Code APE : [code APE]<br>
+        TVA non applicable, art. 293 B du CGI
+    </p>
+    <p>
+        Directeur de la publication : [Prénom Nom]<br>
+        Téléphone : [numéro de téléphone]<br>
+        Email : contact@clearway.fr
+    </p>
+
+    <h2>Hébergement</h2>
+    <p>
+        [Nom de l'hébergeur]<br>
+        [Adresse de l'hébergeur]<br>
+        [Téléphone de l'hébergeur]
+    </p>
+
+    <h2>Conception et développement</h2>
+    <p>
+        [Prénom Nom] — Développeur web indépendant<br>
+        SIRET : [numéro SIRET]
+    </p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+        L'ensemble du contenu de ce site (textes, images, vidéos, logos, icônes, sons, logiciels, etc.)
+        est la propriété exclusive de ClearWay ou de ses partenaires et est protégé par les lois françaises
+        et internationales relatives à la propriété intellectuelle.
+    </p>
+    <p>
+        Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie
+        des éléments du site est interdite sans l'autorisation écrite préalable de ClearWay.
+    </p>
+
+    <h2>Protection des données personnelles</h2>
+    <p>
+        Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique
+        et Libertés, vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition
+        aux données personnelles vous concernant.
+    </p>
+    <p>
+        Les informations collectées via les formulaires du site (estimation, contact, rappel) sont
+        destinées exclusivement à ClearWay pour le traitement de votre demande. Elles ne sont
+        jamais transmises à des tiers sans votre consentement.
+    </p>
+    <p>
+        Pour exercer vos droits, contactez-nous à : <a href="mailto:contact@clearway.fr">contact@clearway.fr</a>
+    </p>
+
+    <h2>Cookies</h2>
+    <p>
+        Ce site utilise des cookies techniques nécessaires à son bon fonctionnement.
+        Des cookies d'analyse peuvent être utilisés pour mesurer l'audience du site.
+        Vous pouvez configurer votre navigateur pour refuser les cookies.
+    </p>
+
+    <h2>Limitation de responsabilité</h2>
+    <p>
+        ClearWay s'efforce de fournir des informations aussi précises que possible sur ce site.
+        Toutefois, ClearWay ne pourra être tenue responsable des omissions, inexactitudes ou
+        carences dans la mise à jour, qu'elles soient de son fait ou du fait de tiers partenaires.
+    </p>
+    <p>
+        Les estimations fournies en ligne sont indicatives et ne constituent pas un devis définitif.
+        Seule une visite sur place permet d'établir un devis ferme.
+    </p>
+
+    <h2>Droit applicable</h2>
+    <p>
+        Les présentes mentions légales sont soumises au droit français.
+        En cas de litige, les tribunaux français seront seuls compétents.
+    </p>
+</div>
+{% endblock %}

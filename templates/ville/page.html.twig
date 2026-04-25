@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras {{ ville.nom }} - Devis gratuit | ClearWay{% endblock %}
+{% block meta_description %}Débarras professionnel à {{ ville.nom }} ({{ ville.departement }}). {{ ville.description|slice(0, 120) }}{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras {{ ville.nom }}",
+    "description": "{{ ville.description }}",
+    "url": "{{ url('ville_page', {ville: slug}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33123456789",
+        "email": "contact@clearway.fr",
+        "areaServed": {
+            "@type": "City",
+            "name": "{{ ville.nom }}"
+        }
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "{{ ville.nom }}"
+    },
+    "serviceType": ["Débarras maison", "Débarras appartement", "Débarras Diogène", "Débarras succession", "Débarras déménagement", "Débarras logement insalubre", "Débarras cave grenier"]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .ville-hero {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        padding: 48px 0 40px;
+    }
+    .ville-hero .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .ville-hero h1 { font-size: 32px; margin: 0 0 12px; line-height: 1.2; }
+    .ville-hero h1 span { color: var(--accent); }
+    .ville-hero .subtitle { font-size: 17px; color: #374151; line-height: 1.7; margin: 0 0 20px; }
+    .ville-hero .meta { font-size: 14px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
+    .ville-hero .meta span { display: flex; align-items: center; gap: 4px; }
+
+    .ville-content { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+
+    .zone-box {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 32px;
+    }
+    .zone-box h2 { font-size: 18px; margin: 0 0 8px; }
+    .zone-box p { color: #374151; margin: 0; line-height: 1.6; }
+
+    .specificites {
+        margin-bottom: 32px;
+    }
+    .specificites h2 { font-size: 18px; margin: 0 0 16px; }
+    .specificites ul { list-style: none; padding: 0; margin: 0; }
+    .specificites li {
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .specificites li:last-child { border-bottom: none; }
+    .specificites li::before {
+        content: '✓';
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-bottom: 32px;
+    }
+    .services-grid h2 { grid-column: 1 / -1; font-size: 18px; margin: 0; }
+    .service-link {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 16px;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: box-shadow 0.2s;
+    }
+    .service-link:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .service-link .icon { font-size: 24px; }
+    .service-link .name { font-weight: 600; font-size: 14px; }
+
+    .cta-box {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border-radius: var(--radius);
+        padding: 32px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .cta-box h3 { margin: 0 0 8px; font-size: 20px; }
+    .cta-box p { color: var(--muted); margin: 0 0 16px; }
+    .cta-box a {
+        display: inline-block;
+        padding: 14px 32px;
+        background: var(--accent);
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
+    }
+
+    .autres-villes { margin-bottom: 32px; }
+    .autres-villes h2 { font-size: 18px; margin: 0 0 16px; }
+    .villes-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .ville-tag {
+        background: var(--card);
+        padding: 8px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        color: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.2s;
+    }
+    .ville-tag:hover { background: #e2e8f0; }
+
+    @media (max-width: 640px) {
+        .ville-hero h1 { font-size: 26px; }
+        .services-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="ville-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / Débarras {{ ville.nom }}
+        </div>
+        <h1>Débarras professionnel à <span>{{ ville.nom }}</span></h1>
+        <p class="subtitle">{{ ville.description }}</p>
+        <div class="meta">
+            <span>📍 {{ ville.departement }}</span>
+            <span>👥 {{ ville.population }} habitants</span>
+            <span>⚡ Intervention sous 48h</span>
+        </div>
+    </div>
+</section>
+
+<div class="ville-content">
+    <div class="zone-box">
+        <h2>Zone d'intervention</h2>
+        <p>{{ ville.zone }}</p>
+    </div>
+
+    <div class="specificites">
+        <h2>Pourquoi choisir ClearWay à {{ ville.nom }} ?</h2>
+        <ul>
+            {% for item in ville.specificites %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="services-grid">
+        <h2>Nos services à {{ ville.nom }}</h2>
+        {% for serviceSlug, service in services %}
+        <a href="{{ path('ville_service_page', {service: serviceSlug, ville: slug}) }}" class="service-link">
+            <span class="icon">{{ service.icon }}</span>
+            <span class="name">{{ service.titre }} {{ ville.nom }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="cta-box">
+        <h3>Besoin d'un débarras à {{ ville.nom }} ?</h3>
+        <p>Estimation gratuite en 2 minutes, sans engagement</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras</a>
+    </div>
+
+    {% if autres_villes is not empty %}
+    <div class="autres-villes">
+        <h2>Nous intervenons aussi à</h2>
+        <div class="villes-list">
+            {% for autreSlug, autre in autres_villes %}
+            <a href="{{ path('ville_page', {ville: autreSlug}) }}" class="ville-tag">{{ autre.nom }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras succession Vitré — Vider une maison après décès | ClearWay{% endblock %}
+{% block meta_description %}Débarras succession à Vitré et en Ille-et-Vilaine. Vidage complet après décès, tri respectueux, coordination avec le notaire. Estimation gratuite en 2 min.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras succession Vitré",
+    "description": "Vidage complet de maison ou appartement après un décès ou une succession à Vitré et en Ille-et-Vilaine.",
+    "url": "{{ url('services_detail', {slug: 'succession'}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33XXXXXXXXX",
+        "email": "contact@clearway.fr"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "Vitré"
+    },
+    "serviceType": "Débarras succession"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Combien coûte un débarras après succession ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le prix dépend du volume à évacuer, du type de bien et de l'accessibilité. Pour une maison complète à Vitré, comptez entre 800 et 3 000 €. Notre estimation en ligne vous donne un premier prix en 2 minutes."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Faut-il être présent pendant l'intervention ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Non, ce n'est pas obligatoire. Vous pouvez nous confier les clés et nous gérons l'intégralité du vidage. Nous vous contactons si nous trouvons des objets de valeur ou des documents importants."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Que faites-vous des objets de valeur et des souvenirs ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nous effectuons un tri minutieux avant toute évacuation. Les objets de valeur, photos, documents et souvenirs sont mis de côté et remis à la famille. Les objets en bon état sont donnés à des associations locales."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Sous quel délai pouvez-vous intervenir ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nous intervenons sous 48h à Vitré et dans un rayon de 50 km. En cas d'urgence (vente imminente, fin de bail), nous pouvons organiser une intervention le jour même."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ url('services') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Débarras succession"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{% include 'services/_landing-styles.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="lp-hero">
+    <div class="container">
+        <div class="lp-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('services') }}">Services</a> / Débarras succession
+        </div>
+        <h1>Débarras succession à <span>Vitré</span> :<br>on s'occupe de tout</h1>
+        <p class="intro">
+            Perdre un proche est déjà suffisamment difficile. Vider sa maison ne devrait pas être un poids supplémentaire.
+            Nous prenons en charge le vidage complet du logement avec respect et délicatesse, à Vitré et dans toute l'Ille-et-Vilaine.
+            Vous n'avez rien à trier, rien à porter, rien à organiser.
+        </p>
+        <a href="{{ path('estimation_formulaire') }}" class="btn-hero">Estimer mon débarras succession →</a>
+    </div>
+</section>
+
+<div class="lp-content">
+    <div class="lp-editorial">
+        <h2>Vider une maison après un décès : par où commencer ?</h2>
+        <p>
+            Quand un proche disparaît, les démarches administratives s'accumulent : notaire, banques, assurances, impôts.
+            Et au milieu de tout ça, il y a <strong>la maison</strong>. Des pièces remplies d'une vie entière, des objets chargés de souvenirs, des meubles qu'il faut évacuer avant la vente ou la fin du bail.
+        </p>
+        <p>
+            À <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Vitré</a> et dans le Pays de Vitré, beaucoup de familles se retrouvent dans cette situation après le décès d'un parent âgé.
+            La maison familiale — souvent une longère ou un pavillon — est remplie de décennies d'accumulation : grenier, cave, garage, dépendances.
+            Le volume à traiter est considérable, et le temps disponible souvent limité par les contraintes de la succession.
+        </p>
+        <div class="lp-highlight">
+            <p><strong>Vous n'avez pas à gérer ça seul.</strong> Nous intervenons sur l'ensemble du Pays de Vitré (Châteaubourg, Argentré-du-Plessis, La Guerche-de-Bretagne, Janzé) pour prendre en charge le vidage complet, de la première visite au dernier coup de balai.</p>
+        </div>
+        <p>
+            Notre approche est différente d'un simple débarrasseur : nous commençons toujours par un <strong>tri minutieux</strong>.
+            Les photos de famille, les bijoux, les documents administratifs (actes notariés, contrats d'assurance, livrets de famille) sont systématiquement mis de côté et remis à la famille.
+            Les objets en bon état — vaisselle, petit mobilier, livres — sont donnés aux associations locales comme Emmaüs ou le Secours Populaire.
+            Seuls les objets réellement hors d'usage sont évacués en déchetterie.
+        </p>
+        <p>
+            Si le logement doit être vendu ou reloué, nous le rendons <strong>propre et vide</strong>, prêt pour les visites.
+            Le nettoyage complet est inclus dans notre prestation — sols, sanitaires, vitres.
+            Certains notaires et agences immobilières de la région nous recommandent directement à leurs clients pour simplifier les successions.
+        </p>
+    </div>
+
+    <div class="lp-why">
+        <h2>Pourquoi faire appel à un professionnel ?</h2>
+        <div class="lp-why-grid">
+            <div class="lp-why-card">
+                <span class="icon">🤝</span>
+                <h3>Vous soulager dans un moment difficile</h3>
+                <p>Trier les affaires d'un proche est éprouvant. Nous le faisons pour vous, avec le respect que la situation impose.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">📋</span>
+                <h3>Coordination avec le notaire</h3>
+                <p>Nous nous adaptons au calendrier de la succession et pouvons intervenir en lien direct avec votre notaire.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">💎</span>
+                <h3>Tri minutieux des objets de valeur</h3>
+                <p>Photos, bijoux, documents, souvenirs de famille : tout est mis de côté et remis à la famille avant l'évacuation.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🏠</span>
+                <h3>Logement remis en état</h3>
+                <p>Le bien est prêt pour la vente ou la relocation. Nettoyage complet inclus après le vidage.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lp-checklist">
+        <h2>Ce que comprend notre intervention</h2>
+        <ul>
+            <li>Visite préalable gratuite pour évaluer le volume</li>
+            <li>Tri des objets de valeur, souvenirs et documents importants</li>
+            <li>Mise de côté des affaires que la famille souhaite conserver</li>
+            <li>Don aux associations locales des objets en bon état</li>
+            <li>Évacuation complète de tous les encombrants</li>
+            <li>Démontage des meubles volumineux</li>
+            <li>Nettoyage complet du logement après vidage</li>
+            <li>Certificat de débarras si nécessaire</li>
+        </ul>
+    </div>
+
+    <div class="lp-faq">
+        <h2>Questions fréquentes — Débarras succession</h2>
+        <details>
+            <summary>Combien coûte un débarras après succession ?</summary>
+            <div class="faq-answer">
+                Le prix dépend du volume à évacuer, du type de bien et de l'accessibilité. Pour une maison complète à Vitré, comptez entre 800 et 3 000 €. Notre estimation en ligne vous donne un premier prix en 2 minutes, sans engagement.
+            </div>
+        </details>
+        <details>
+            <summary>Faut-il être présent pendant l'intervention ?</summary>
+            <div class="faq-answer">
+                Non, ce n'est pas obligatoire. Vous pouvez nous confier les clés et nous gérons l'intégralité du vidage. Nous vous contactons si nous trouvons des objets de valeur ou des documents importants.
+            </div>
+        </details>
+        <details>
+            <summary>Que faites-vous des objets de valeur et des souvenirs ?</summary>
+            <div class="faq-answer">
+                Nous effectuons un tri minutieux avant toute évacuation. Les objets de valeur, photos, documents et souvenirs sont mis de côté et remis à la famille. Les objets en bon état sont donnés à des associations locales.
+            </div>
+        </details>
+        <details>
+            <summary>Sous quel délai pouvez-vous intervenir ?</summary>
+            <div class="faq-answer">
+                Nous intervenons sous 48h à Vitré et dans un rayon de 50 km. En cas d'urgence (vente imminente, fin de bail), nous pouvons organiser une intervention le jour même.
+            </div>
+        </details>
+    </div>
+
+    <div class="lp-testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">Après le décès de ma mère, je ne savais pas comment gérer la maison remplie de 40 ans de souvenirs. L'équipe a trié chaque pièce avec soin, mis de côté les photos et les bijoux, et vidé le reste en une journée. Un vrai soulagement dans un moment très difficile.</div>
+        <div class="author">
+            <span class="avatar">CL</span> Catherine L., Vitré
+        </div>
+    </div>
+
+    <div class="lp-cta">
+        <h2>Besoin de vider un logement après succession ?</h2>
+        <p>Estimation gratuite en 2 minutes. On vous rappelle pour organiser l'intervention.</p>
+        <a href="{{ path('estimation_formulaire') }}">Estimer mon débarras gratuitement →</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="lp-autres">
+        <h2>Nos autres services de débarras</h2>
+        <div class="lp-autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="lp-autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

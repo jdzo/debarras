@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Débarras logement insalubre Vitré — Remise en état complète | ClearWay{% endblock %}
+{% block meta_description %}Débarras et nettoyage de logement insalubre à Vitré et en Ille-et-Vilaine. Évacuation, désinfection, remise en état. Devis gratuit.{% endblock %}
+
+{% block schema_org %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Débarras logement insalubre Vitré",
+    "description": "Remise en état complète de logements insalubres à Vitré. Évacuation, nettoyage approfondi, désinfection.",
+    "url": "{{ url('services_detail', {slug: 'logement-insalubre'}) }}",
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": "ClearWay Débarras",
+        "telephone": "+33XXXXXXXXX",
+        "email": "contact@clearway.fr"
+    },
+    "areaServed": {
+        "@type": "City",
+        "name": "Vitré"
+    },
+    "serviceType": "Débarras logement insalubre"
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Qu'est-ce qu'un logement insalubre ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Un logement insalubre présente des risques pour la santé de ses occupants : accumulation de déchets, présence de nuisibles, moisissures, absence d'hygiène. La remise en état nécessite une intervention professionnelle avec des équipements adaptés."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Intervenez-vous pour les bailleurs sociaux ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, nous travaillons régulièrement avec les bailleurs sociaux, les syndics et les propriétaires pour remettre en état des logements insalubres entre deux locataires ou suite à une expulsion."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Le logement sera-t-il habitable après votre passage ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Notre objectif est de rendre le logement propre et habitable. Nous évacuons tous les encombrants, nettoyons en profondeur et désinfectons. Des travaux complémentaires (peinture, plomberie) peuvent être nécessaires selon l'état initial."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Combien coûte la remise en état d'un logement insalubre ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le coût varie selon la superficie, le volume d'encombrants et le niveau d'insalubrité. Comptez entre 1 000 et 4 000 € pour un appartement standard. Nous établissons un devis précis après visite gratuite."
+            }
+        }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "{{ url('accueil') }}"},
+        {"@type": "ListItem", "position": 2, "name": "Services", "item": "{{ url('services') }}"},
+        {"@type": "ListItem", "position": 3, "name": "Débarras logement insalubre"}
+    ]
+}
+</script>
+{% endblock %}
+
+{% block stylesheets %}
+{% include 'services/_landing-styles.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="lp-hero">
+    <div class="container">
+        <div class="lp-breadcrumb">
+            <a href="{{ path('accueil') }}">Accueil</a> / <a href="{{ path('services') }}">Services</a> / Logement insalubre
+        </div>
+        <h1>Logement insalubre :<br>débarras et nettoyage complet à <span>Vitré</span></h1>
+        <p class="intro">
+            Un logement devenu insalubre ne peut pas être remis en état avec de simples moyens domestiques.
+            Notre équipe intervient avec le matériel adapté pour évacuer, nettoyer et désinfecter entièrement le logement,
+            afin qu'il redevienne habitable, louable ou vendable.
+        </p>
+        <a href="{{ path('estimation_formulaire') }}" class="btn-hero">Demander un devis gratuit →</a>
+    </div>
+</section>
+
+<div class="lp-content">
+    <div class="lp-editorial">
+        <h2>Logement insalubre : quand le nettoyage classique ne suffit plus</h2>
+        <p>
+            Un logement peut devenir insalubre pour de nombreuses raisons : un locataire qui a laissé le bien dans un état dégradé, une occupation prolongée sans entretien, un sinistre non traité, ou une situation d'accumulation qui s'est installée progressivement.
+            Le résultat est le même : <strong>le logement n'est plus habitable en l'état</strong>.
+        </p>
+        <p>
+            À <a href="{{ path('ville_page', {ville: 'vitre'}) }}">Vitré</a> et en Ille-et-Vilaine, les propriétaires bailleurs, les syndics de copropriété et les bailleurs sociaux font régulièrement face à ce type de situation, notamment entre deux locataires.
+            Un logement insalubre ne peut pas être reloué tel quel — au-delà de l'aspect visuel, il y a des <strong>risques sanitaires réels</strong> : moisissures, présence de nuisibles, déchets organiques, contamination des surfaces.
+        </p>
+        <div class="lp-highlight">
+            <p><strong>Un simple ménage ne suffit pas.</strong> Il faut d'abord tout évacuer, puis nettoyer en profondeur avec des produits professionnels, désinfecter, et si nécessaire traiter les nuisibles. C'est exactement ce que nous faisons.</p>
+        </div>
+        <p>
+            Notre équipe intervient avec le <strong>matériel adapté</strong> : nettoyeurs haute pression, aspirateurs industriels, produits biocides homologués, équipements de protection individuelle.
+            Nous traitons chaque pièce du sol au plafond — y compris les sanitaires, la cuisine et les zones difficiles d'accès (derrière les meubles, sous les revêtements décollés).
+        </p>
+        <p>
+            À l'issue de l'intervention, le logement est <strong>propre, désinfecté et prêt</strong> pour d'éventuels travaux de rénovation (peinture, revêtements) ou pour une remise en location directe.
+            Nous fournissons un compte-rendu d'intervention si vous en avez besoin pour votre assurance ou pour justifier des travaux auprès de la copropriété.
+        </p>
+    </div>
+
+    <div class="lp-why">
+        <h2>Pourquoi faire appel à un professionnel ?</h2>
+        <div class="lp-why-grid">
+            <div class="lp-why-card">
+                <span class="icon">⚕️</span>
+                <h3>Risques sanitaires maîtrisés</h3>
+                <p>Moisissures, nuisibles, déchets organiques : nos équipes disposent des protections et équipements nécessaires pour intervenir en sécurité.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🧹</span>
+                <h3>Nettoyage en profondeur</h3>
+                <p>Pas un simple coup de balai. Nettoyage de toutes les surfaces, désinfection, traitement anti-nuisibles si nécessaire.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">📜</span>
+                <h3>Conformité légale</h3>
+                <p>Un propriétaire a l'obligation de fournir un logement décent. Notre intervention permet de remettre le bien aux normes.</p>
+            </div>
+            <div class="lp-why-card">
+                <span class="icon">🔑</span>
+                <h3>Prêt pour relocation ou vente</h3>
+                <p>Le logement est rendu propre et vide, prêt à accueillir un nouveau locataire ou à être mis en vente.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lp-checklist">
+        <h2>Ce que comprend notre intervention</h2>
+        <ul>
+            <li>Évaluation gratuite de l'état du logement</li>
+            <li>Évacuation complète des encombrants et déchets</li>
+            <li>Nettoyage approfondi de toutes les pièces (sols, murs, plafonds)</li>
+            <li>Désinfection des surfaces contaminées</li>
+            <li>Traitement anti-nuisibles (cafards, rats, punaises)</li>
+            <li>Évacuation et tri des déchets selon les filières réglementaires</li>
+            <li>Remise en état pour habitation, location ou vente</li>
+        </ul>
+    </div>
+
+    <div class="lp-faq">
+        <h2>Questions fréquentes — Logement insalubre</h2>
+        <details>
+            <summary>Qu'est-ce qu'un logement insalubre ?</summary>
+            <div class="faq-answer">
+                Un logement insalubre présente des risques pour la santé de ses occupants : accumulation de déchets, présence de nuisibles, moisissures, absence d'hygiène. La remise en état nécessite une intervention professionnelle avec des équipements adaptés.
+            </div>
+        </details>
+        <details>
+            <summary>Intervenez-vous pour les bailleurs sociaux ?</summary>
+            <div class="faq-answer">
+                Oui, nous travaillons régulièrement avec les bailleurs sociaux, les syndics et les propriétaires pour remettre en état des logements insalubres entre deux locataires ou suite à une expulsion.
+            </div>
+        </details>
+        <details>
+            <summary>Le logement sera-t-il habitable après votre passage ?</summary>
+            <div class="faq-answer">
+                Notre objectif est de rendre le logement propre et habitable. Nous évacuons tous les encombrants, nettoyons en profondeur et désinfectons. Des travaux complémentaires (peinture, plomberie) peuvent être nécessaires selon l'état initial.
+            </div>
+        </details>
+        <details>
+            <summary>Combien coûte la remise en état d'un logement insalubre ?</summary>
+            <div class="faq-answer">
+                Le coût varie selon la superficie, le volume d'encombrants et le niveau d'insalubrité. Comptez entre 1 000 et 4 000 € pour un appartement standard. Nous établissons un devis précis après visite gratuite.
+            </div>
+        </details>
+    </div>
+
+    <div class="lp-testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="text">J'avais récupéré un appartement dans un état lamentable après le départ d'un locataire. Impossible de le relouer en l'état. L'équipe a tout évacué, nettoyé et désinfecté en deux jours. L'appartement est comme neuf.</div>
+        <div class="author">
+            <span class="avatar">JD</span> Jean-Marc D., Vitré
+        </div>
+    </div>
+
+    <div class="lp-cta">
+        <h2>Un logement insalubre à remettre en état ?</h2>
+        <p>Devis gratuit après visite. Intervention rapide à Vitré et alentours.</p>
+        <a href="{{ path('estimation_formulaire') }}">Demander un devis gratuit →</a>
+    </div>
+
+    {% if autres_services is not empty %}
+    <div class="lp-autres">
+        <h2>Nos autres services de débarras</h2>
+        <div class="lp-autres-grid">
+            {% for other_slug, other in autres_services %}
+            <a href="{{ path('services_detail', {slug: other_slug}) }}" class="lp-autre-card">
+                <span class="icon">{{ other.icon }}</span>
+                <span class="name">{{ other.titre }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

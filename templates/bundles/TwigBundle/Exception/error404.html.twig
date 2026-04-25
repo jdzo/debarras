@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable — ClearWay Débarras{% endblock %}
+{% block meta_description %}La page que vous cherchez n'existe pas ou a été déplacée. Retrouvez nos services de débarras à Vitré.{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .error-page {
+        text-align: center;
+        padding: 80px 24px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .error-code {
+        font-size: 96px;
+        font-weight: 900;
+        letter-spacing: -4px;
+        color: #e4e4e7;
+        margin: 0 0 8px;
+        line-height: 1;
+    }
+    .error-page h1 {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0 0 12px;
+    }
+    .error-page p {
+        font-size: 16px;
+        color: var(--muted);
+        margin: 0 0 32px;
+        line-height: 1.7;
+    }
+    .error-links {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .error-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 24px;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.2s;
+    }
+    .error-links .primary {
+        background: var(--text);
+        color: #fff;
+    }
+    .error-links .primary:hover { opacity: 0.85; }
+    .error-links .ghost {
+        background: var(--card);
+        color: var(--text);
+        border: 1px solid #e4e4e7;
+    }
+    .error-links .ghost:hover { border-color: #a1a1aa; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="error-page">
+    <div class="error-code">404</div>
+    <h1>Cette page n'existe pas</h1>
+    <p>La page que vous cherchez a peut-être été déplacée ou n'existe plus. Pas de panique, voici comment retrouver votre chemin.</p>
+    <div class="error-links">
+        <a href="{{ path('accueil') }}" class="primary">Retour à l'accueil</a>
+        <a href="{{ path('estimation_formulaire') }}" class="ghost">Estimer mon débarras</a>
+        <a href="{{ path('services') }}" class="ghost">Nos services</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block sticky_cta %}{% endblock %}

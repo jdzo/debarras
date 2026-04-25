@@ -1,0 +1,233 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Estimations{% endblock %}
+{% block sticky_cta %}{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .admin-wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .admin-header h1 { font-size: 24px; margin: 0; }
+    .admin-header .count { color: var(--muted); font-size: 14px; }
+
+    .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filter-btn {
+        padding: 6px 14px;
+        border-radius: 999px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        color: #374151;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 2px solid #f1f5f9;
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #f8fafc;
+        vertical-align: middle;
+    }
+    tbody tr:hover { background: #fafbfc; }
+
+    .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-success { background: #dcfce7; color: #16a34a; }
+    .badge-warning { background: #fef9c3; color: #a16207; }
+    .badge-primary { background: #e0e7ff; color: #4338ca; }
+    .badge-danger { background: #fee2e2; color: #dc2626; }
+    .badge-secondary { background: #f1f5f9; color: #475569; }
+
+    .btn-view {
+        padding: 5px 12px;
+        background: var(--accent);
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .pagination { display: flex; gap: 4px; justify-content: center; margin-top: 24px; }
+    .pagination a, .pagination span {
+        padding: 8px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .pagination a { background: #f1f5f9; color: #374151; }
+    .pagination a:hover { background: #e2e8f0; }
+    .pagination .current { background: var(--accent); color: white; }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .empty-state .icon { font-size: 48px; margin-bottom: 12px; }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    .stat-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 16px;
+        text-align: center;
+    }
+    .stat-card .stat-value { font-size: 28px; font-weight: 800; color: #0f172a; }
+    .stat-card .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    .toolbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+    .search-input {
+        padding: 8px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        flex: 1;
+        min-width: 200px;
+    }
+    .search-input:focus { outline: none; border-color: var(--accent); }
+    .btn-export {
+        padding: 8px 16px;
+        background: #f1f5f9;
+        color: #374151;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .btn-export:hover { background: #e2e8f0; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="admin-wrap">
+    <div style="display:flex;gap:16px;margin-bottom:20px;">
+        <a href="{{ path('admin_dashboard') }}" style="color:var(--accent);text-decoration:none;font-weight:600;font-size:15px;border-bottom:2px solid var(--accent);">Estimations</a>
+        <a href="{{ path('admin_leads') }}" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:15px;">Leads</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.total }}</div>
+            <div class="stat-label">Total estimations</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:var(--accent);">{{ stats.nouvelles }}</div>
+            <div class="stat-label">Nouvelles</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:#16a34a;">{{ stats.acceptees }}</div>
+            <div class="stat-label">Acceptees</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" style="color:#0f172a;">{{ stats.ca_potentiel|number_format(0, ',', ' ') }} EUR</div>
+            <div class="stat-label">CA potentiel</div>
+        </div>
+    </div>
+
+    <div class="admin-header">
+        <div>
+            <h1>Estimations</h1>
+            <span class="count">{{ total }} estimation{{ total > 1 ? 's' : '' }}</span>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <form method="get" action="{{ path('admin_dashboard') }}" style="display:contents;">
+            {% if statut_filtre %}<input type="hidden" name="statut" value="{{ statut_filtre }}">{% endif %}
+            <input type="text" name="q" class="search-input" placeholder="Rechercher par nom, email, telephone..."
+                   value="{{ recherche ?? '' }}">
+            <button type="submit" class="btn-export" style="background:var(--accent);color:#fff;">Rechercher</button>
+        </form>
+        <a href="{{ path('admin_export_csv') }}" class="btn-export">Exporter CSV</a>
+    </div>
+
+    <div class="filters">
+        <a href="{{ path('admin_dashboard') }}"
+           class="filter-btn {{ statut_filtre is null ? 'active' : '' }}">Toutes</a>
+        {% for statut in statuts %}
+        <a href="{{ path('admin_dashboard', {statut: statut.value}) }}"
+           class="filter-btn {{ statut_filtre == statut.value ? 'active' : '' }}">{{ statut.label() }}</a>
+        {% endfor %}
+    </div>
+
+    {% if estimations is empty %}
+    <div class="empty-state">
+        <div class="icon">📭</div>
+        <p>Aucune estimation{% if statut_filtre %} avec le statut "{{ statut_filtre }}"{% endif %}</p>
+    </div>
+    {% else %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Type</th>
+                    <th>Superficie</th>
+                    <th>Estimation</th>
+                    <th>Statut</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estimation in estimations %}
+                <tr>
+                    <td>{{ estimation.createdAt|date('d/m/Y H:i') }}</td>
+                    <td>
+                        <strong>{{ estimation.coordonnees.nom }}</strong><br>
+                        <span style="color:var(--muted);font-size:12px;">{{ estimation.coordonnees.telephone }}</span>
+                    </td>
+                    <td>{{ estimation.typeDeBien }}</td>
+                    <td>{{ estimation.superficie }}</td>
+                    <td style="font-weight:700;">{{ estimation.fourchette }}</td>
+                    <td><span class="badge badge-{{ estimation.statutCouleur }}">{{ estimation.statut }}</span></td>
+                    <td><a href="{{ path('admin_estimation_detail', {id: estimation.id}) }}" class="btn-view">Voir</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if pages > 1 %}
+    <div class="pagination">
+        {% for p in 1..pages %}
+            {% if p == page %}
+                <span class="current">{{ p }}</span>
+            {% else %}
+                <a href="{{ path('admin_dashboard', {page: p, statut: statut_filtre}) }}">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
