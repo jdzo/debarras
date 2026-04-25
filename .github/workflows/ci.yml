@@ -65,6 +65,9 @@ jobs:
       - name: Lint Container
         run: php bin/console lint:container --env=test
 
+      - name: Install importmap assets
+        run: php bin/console importmap:install --env=test
+
       - name: Create test database
         run: php bin/console doctrine:database:create --if-not-exists --env=test
 
