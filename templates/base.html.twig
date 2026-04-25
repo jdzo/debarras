@@ -5,11 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}ClearWay - Débarras professionnel{% endblock %}</title>
         <meta name="description" content="{% block meta_description %}ClearWay : service professionnel de débarras maison, appartement, succession et Diogène. Estimation gratuite en 2 minutes, intervention rapide.{% endblock %}">
-        <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
+        {% set _current_route = app.request.attributes.get('_route') %}
+        {% if _current_route %}
+            <link rel="canonical" href="{{ url(_current_route, app.request.attributes.get('_route_params') ?? []) }}">
+        {% endif %}
         <meta property="og:title" content="{{ block('title') }}">
         <meta property="og:description" content="{{ block('meta_description') }}">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
+        {% if _current_route %}
+            <meta property="og:url" content="{{ url(_current_route, app.request.attributes.get('_route_params') ?? []) }}">
+        {% endif %}
         <meta property="og:locale" content="fr_FR">
         <meta property="og:site_name" content="ClearWay Débarras">
         <meta property="og:image" content="{% block og_image %}{{ absolute_url(asset('image/og-image.jpg')) }}{% endblock %}">
@@ -347,7 +352,7 @@
         </style>
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app', {'nonce': app.request.attributes.get('csp_nonce')}) }}{% endblock %}
         {% endblock %}
     </head>
     <body>
@@ -451,6 +456,7 @@
                 <h3>Rappel gratuit</h3>
                 <p>Un conseiller vous rappelle en moins de 2h.</p>
                 <form data-rappel-modal-target="form" data-action="submit->rappel-modal#submit">
+                    <input type="hidden" name="_token" value="{{ csrf_token('lead') }}" data-rappel-modal-target="token">
                     <div class="form-group">
                         <input type="text" name="nom" placeholder="Votre nom" required data-rappel-modal-target="nom">
                     </div>
