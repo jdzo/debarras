@@ -18,3 +18,13 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+# IDE
+/.idea/
+
+# Claude Code (mémoire locale, hooks, etc.)
+/.claude/
+
+# Uploads utilisateurs
+/public/uploads/estimations/*
+!/public/uploads/estimations/.gitkeep
